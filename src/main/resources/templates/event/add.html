@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Add event</title>
 </head>
 <body>
-
+<h2>Add new event:</h2>
+<form action="#" th:action="@{/event/submit}" th:object="${eventDTO}" method="post">
+    <p>
+        Name:
+        <input type="text" th:field="*{name}"/>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </p>
+    <p>
+        Start date:
+        <input type="datetime-local" th:field="*{startDate}" />
+        <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span>
+    </p>
+    <p>
+        End date:
+        <input type="datetime-local" th:field="*{endDate}"/>
+        <div th:text="${dateMessage != null} ? ${dateMessage} : ''"></div>
+        <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
+    </p>
+    <p>
+        Location:
+        <input type="text" th:field="*{location}"/>
+        <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></span>
+    </p>
+    <p>
+        Description:
+        <input type="text" th:field="*{description}"/>
+        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+    </p>
+    <input type="submit" value="SUBMIT"/>
+</form>
 </body>
 </html>

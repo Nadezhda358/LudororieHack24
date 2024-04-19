@@ -21,11 +21,16 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
+
+    @NotEmpty(message = "Field must not be empty!")
+    @Size(min=3, message = "Size must be at least 3 characters!")
+    private String name;
+
+    @NotNull(message = "Field must not be empty!")
     private LocalDateTime startDate;
 
     // след дата на начало
-    @NotEmpty
+    @NotNull(message = "Field must not be empty!")
     private LocalDateTime endDate;
 
     @Size(min = 4, max = 250, message = "Size must be between 4 and 250 characters!")

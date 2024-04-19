@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(name = "/templates/event")
+@RequestMapping("/event")
 @AllArgsConstructor
 public class EventController {
     private EventService eventService;
@@ -19,16 +19,21 @@ public class EventController {
 
     @GetMapping("/add")
     private String eventForm(Model model) {
-        model.addAttribute("templates/event", new EventDTO());
-        return "/events/add";
+        model.addAttribute("eventDTO", new EventDTO());
+        return "/event/add";
     }
 
     @PostMapping("/submit")
     private String eventSubmit(@Valid EventDTO eventDTO, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors() || eventService.checkIfEndDateIsAfterStart(eventDTO)) {
-            return "redirect:/event/add";
+        if (bindingResult.hasErrors()) {
+            return "/event/add";
         }
-        //
+        if (!eventService.checkIfEndDateIsAfterStart(eventDTO)) {
+            model.addAttribute("dateMessage", "End date must be after start date!");
+            return "/event/add";
+        }
+        //TODO set organiser
+        eventRepository.save(eventService.eventDTOToEvent(eventDTO));
         return "/event/all";
     }
 }
