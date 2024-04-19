@@ -1,9 +1,11 @@
 package com.ludogoriehack24.ludogoriehack24.event;
 
+import com.ludogoriehack24.ludogoriehack24.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,4 +23,6 @@ public class Event {
     private String location;
     // повече от 255 символа
     private String description;
+    @ManyToMany(mappedBy = "events")
+    private List<User> users;
 }

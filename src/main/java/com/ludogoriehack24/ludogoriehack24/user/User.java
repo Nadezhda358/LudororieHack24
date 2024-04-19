@@ -1,5 +1,6 @@
 package com.ludogoriehack24.ludogoriehack24.user;
 
+import com.ludogoriehack24.ludogoriehack24.event.Event;
 import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriend;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,5 +27,11 @@ public class User {
     private String workExperience;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFriend> friends;
+    @ManyToMany
+    @JoinTable(name = "event_users",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private List<Event> events;
+
     //role
 }
