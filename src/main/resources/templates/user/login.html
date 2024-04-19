@@ -1,0 +1,113 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Login</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>Login Form</h2>-->
+<!--<form th:action="@{/users/login}" method="post">-->
+<!--  <div class="form-group">-->
+<!--    <label>Username or Email:</label>-->
+<!--    <input type="text" name="usernameOrEmail" class="form-control" required/>-->
+<!--  </div>-->
+<!--  <div class="form-group">-->
+<!--    <label>Password:</label>-->
+<!--    <input type="password" name="password" class="form-control" required/>-->
+<!--  </div>-->
+<!--  <div class="form-group">-->
+<!--    <input type="submit" value="Submit" class="btn btn-success btn-block">-->
+<!--  </div>-->
+<!--  <div th:if="${param.error}" class="error-message">-->
+<!--    Invalid username and password.-->
+<!--  </div>-->
+<!--  <div th:if="${param.logout}" class="error-message">-->
+<!--    You have been logged out.-->
+<!--  </div>-->
+<!--  <td><a th:href="@{/users/registration}">You don't have an account?</a></td>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .btn-success {
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+        }
+
+        .registration-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <h2>Login Form</h2>
+  <form th:action="@{/users/login}" method="post">
+    <div class="form-group">
+      <label>Username or Email:</label>
+      <input type="text" name="usernameOrEmail" class="form-control" required/>
+    </div>
+    <div class="form-group">
+      <label>Password:</label>
+      <input type="password" name="password" class="form-control" required/>
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Submit" class="btn btn-primary btn-block">
+    </div>
+    <div th:if="${param.error}" class="error-message">
+      Invalid username and password.
+    </div>
+    <div th:if="${param.logout}" class="error-message">
+      You have been logged out.
+    </div>
+    <a th:href="@{/users/registration}" class="registration-link">You don't have an account? Register here.</a>
+  </form>
+</div>
+</body>
+</html>

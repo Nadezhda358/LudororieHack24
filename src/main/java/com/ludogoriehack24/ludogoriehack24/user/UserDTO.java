@@ -20,7 +20,7 @@ public class UserDTO {
     @NotEmpty
     private String fullName;
     @NotEmpty
-    @Size(min = 6, max = 20, message = "Username must be between 6 and 20 characters!")
+    @Size(min = 4, max = 20, message = "Username must be between 6 and 20 characters!")
     private String username;
     @NotEmpty
     @Size(min = 8, message = "Password must be at least 8 characters!")
@@ -40,12 +40,7 @@ public class UserDTO {
     private String workExperience;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFriend> friends;
-    @ManyToMany
-    @JoinTable(name = "event_users",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
     private String profileImageName;
 }

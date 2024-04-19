@@ -24,7 +24,7 @@ public class User {
     @NotEmpty
     private String fullName;
     @NotEmpty
-    @Size(min = 6, max = 20, message = "Username must be between 6 and 20 characters!")
+    @Size(min = 4, max = 20, message = "Username must be between 6 and 20 characters!")
     private String username;
     @NotEmpty
     @Size(min = 8, message = "Password must be at least 8 characters!")
@@ -60,6 +60,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
     private String profileImageName;
+    @Column(columnDefinition = "boolean DEFAULT '1'")
+    private boolean enabled;
 
     //role
 }
