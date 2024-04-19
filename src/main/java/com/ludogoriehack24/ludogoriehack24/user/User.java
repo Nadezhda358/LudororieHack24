@@ -30,13 +30,13 @@ public class User {
     private List<UserFriend> friends;
 
     @ManyToMany
-    @JoinTable(name = "ability_user", joinColumns = @JoinColumn(name = "ability_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "ability_user", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "ability_id"))
     private List<Ability> userAbilities;
 
     @ManyToMany
-    @JoinTable(name = "ability_user_needed", joinColumns = @JoinColumn(name = "needed_ability_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "ability_user_needed", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "needed_ability_id"))
     private List<Ability> neededAbilities;
     @ManyToMany
     @JoinTable(name = "event_users",
@@ -44,5 +44,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
 
+
+    @OneToMany(mappedBy = "user")
+    private List<Event> organisedEvents;
     //role
 }
