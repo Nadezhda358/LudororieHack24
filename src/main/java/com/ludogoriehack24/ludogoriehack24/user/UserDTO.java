@@ -7,15 +7,12 @@ import lombok.*;
 
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@ToString
+public class UserDTO {
     private Long id;
     private String fullName;
     private String username;
@@ -25,14 +22,8 @@ public class User {
     private String education;
     private String workplace;
     private String workExperience;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFriend> friends;
-    @ManyToMany
-    @JoinTable(name = "event_users",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
     private String profileImageName;
-
     //role
 }
