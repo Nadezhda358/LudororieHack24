@@ -33,6 +33,7 @@ public class EventController {
             return "/event/add";
         }
         //TODO set organiser
+        eventService.setOrganiser(eventDTO);
         eventRepository.save(eventService.eventDTOToEvent(eventDTO));
         model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());
         return "/event/all";
