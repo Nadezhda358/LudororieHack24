@@ -1,0 +1,25 @@
+.container{
+    margin-top: 50px;
+}
+.card-img-top{
+    height: 200px;
+    object-fit: cover;
+}
+.btn-more {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.card{
+    position: relative;
+    height: 100%;
+}
+.arrow-right{
+    float: right;
+    align-self: flex-end;
+    width: 50px;
+}
+.alert{
+    padding-bottom: 0;
+    padding-top: 10px;
+}

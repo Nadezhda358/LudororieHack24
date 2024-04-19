@@ -21,4 +21,10 @@ public class UserController {
         model.addAttribute("allUsers", allUsers);
         return "home_page.html";
     }
+    @GetMapping("/all")
+    public String showAllUsers(Model model){
+        List<UserDTO> allUsers = userService.getAllUsers();
+        model.addAttribute("allUsers", allUsers);
+        return "all_users.html";
+    }
 }

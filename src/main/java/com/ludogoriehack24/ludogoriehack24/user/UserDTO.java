@@ -1,5 +1,6 @@
 package com.ludogoriehack24.ludogoriehack24.user;
 
+import com.ludogoriehack24.ludogoriehack24.abilities.Ability;
 import com.ludogoriehack24.ludogoriehack24.event.Event;
 import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriend;
 import jakarta.persistence.*;
@@ -25,5 +26,7 @@ public class UserDTO {
     private List<UserFriend> friends;
     private List<Event> events;
     private String profileImageName;
+    private List<Ability> userAbilities;
+    private List<Ability> neededAbilities;
     //role
 }
