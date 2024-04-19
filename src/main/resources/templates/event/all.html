@@ -31,15 +31,16 @@
             </thead>
             <tbody>
             <tr th:each="event : ${allEventDTOs}">
-                <td th:text="${event.name}"></td>
-                <td th:text="${event.startDate}"></td>
-                <td th:text="${event.endDate}"></td>
-                <td th:text="${event.location}"></td>
-                <td th:text="${event.description}"></td>
-                <td>soon...</td>
+                <td th:text="${event.name} ?: 'N/A'"></td>
+                <td th:text="${event.startDate} ?: 'N/A'"></td>
+                <td th:text="${event.endDate} ?: 'N/A'"></td>
+                <td th:text="${event.location} ?: 'N/A'"></td>
+                <td th:text="${event.description} ?: 'N/A'"></td>
+                <td th:text="${event.user != null ? event.user.username : 'N/A'}"></td>
                 <td>options...</td>
             </tr>
             </tbody>
+
         </table>
     </div>
 </div>
