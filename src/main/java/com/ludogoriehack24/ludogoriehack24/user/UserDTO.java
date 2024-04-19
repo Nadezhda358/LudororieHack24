@@ -6,20 +6,17 @@ import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriend;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
-
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserDTO {
     @NotEmpty
     private String fullName;
     @NotEmpty
@@ -28,6 +25,8 @@ public class User {
     @NotEmpty
     @Size(min = 8, message = "Password must be at least 8 characters!")
     private String password;
+    @NotEmpty
+    private String repeatPassword;
     @NotEmpty
     @Size(min = 10, max = 10, message = "Mobile number must be 10 digits!")
     private String mobile;
@@ -48,6 +47,4 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
-
-    //role
 }
