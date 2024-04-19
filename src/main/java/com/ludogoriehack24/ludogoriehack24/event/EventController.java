@@ -34,6 +34,13 @@ public class EventController {
         }
         //TODO set organiser
         eventRepository.save(eventService.eventDTOToEvent(eventDTO));
+        model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());
+        return "/event/all";
+    }
+
+    @GetMapping("/all")
+    private String allEvents(Model model) {
+        model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());
         return "/event/all";
     }
 }
