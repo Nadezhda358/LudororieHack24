@@ -43,6 +43,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
+    private String profileImageName;
 
 
     @OneToMany(mappedBy = "user")
