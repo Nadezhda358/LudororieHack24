@@ -1,6 +1,7 @@
 package com.ludogoriehack24.ludogoriehack24.user;
 
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
+import com.ludogoriehack24.ludogoriehack24.abilities.Ability;
 import com.ludogoriehack24.ludogoriehack24.event.Event;
 import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriend;
 import jakarta.persistence.*;
@@ -43,11 +44,22 @@ public class User {
     private Role role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFriend> friends;
+
+    @ManyToMany
+    @JoinTable(name = "ability_user", joinColumns = @JoinColumn(name = "ability_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<Ability> userAbilities;
+
+    @ManyToMany
+    @JoinTable(name = "ability_user_needed", joinColumns = @JoinColumn(name = "needed_ability_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<Ability> neededAbilities;
     @ManyToMany
     @JoinTable(name = "event_users",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
+    private String profileImageName;
 
     //role
 }
