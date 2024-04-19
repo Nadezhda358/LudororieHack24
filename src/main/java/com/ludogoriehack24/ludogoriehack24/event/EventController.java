@@ -28,11 +28,10 @@ public class EventController {
         if (bindingResult.hasErrors()) {
             return "/event/add";
         }
-        if (!eventService.checkIfEndDateIsAfterStart(eventDTO)) {
-            model.addAttribute("dateMessage", "End date must be after start date!");
+        if (!eventService.checkIfDateIsValid(eventDTO)) {
+            model.addAttribute("dateMessage", "Invalid dates!");
             return "/event/add";
         }
-        //TODO set organiser
         eventService.setOrganiser(eventDTO);
         eventRepository.save(eventService.eventDTOToEvent(eventDTO));
         model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());

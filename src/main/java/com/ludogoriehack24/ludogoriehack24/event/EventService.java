@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,7 +27,8 @@ public class EventService {
         return modelMapper.map(eventDTO, Event.class);
     }
 
-    public boolean checkIfEndDateIsAfterStart(EventDTO eventDTO) {
+    public boolean checkIfDateIsValid(EventDTO eventDTO) {
+        if (eventDTO.getStartDate().isBefore(LocalDateTime.now())) return false;
         return eventDTO.getStartDate().isBefore(eventDTO.getEndDate());
     }
 
