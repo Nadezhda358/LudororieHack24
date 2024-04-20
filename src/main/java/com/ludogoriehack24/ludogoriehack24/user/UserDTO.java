@@ -17,20 +17,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    @NotEmpty
+    @NotEmpty(message = "Field must not be empty!")
     private String fullName;
-    @NotEmpty
+    @NotEmpty(message = "Field must not be empty!")
     @Size(min = 4, max = 20, message = "Username must be between 6 and 20 characters!")
     private String username;
-    @NotEmpty
+    @NotEmpty(message = "Field must not be empty!")
     @Size(min = 8, message = "Password must be at least 8 characters!")
     private String password;
-    @NotEmpty
+    @NotEmpty(message = "Field must not be empty!")
     private String repeatPassword;
-    @NotEmpty
+    @NotEmpty(message = "Field must not be empty!")
     @Size(min = 10, max = 10, message = "Mobile number must be 10 digits!")
     private String mobile;
-    @NotEmpty
+    @NotEmpty(message = "Field must not be empty!")
     private String email;
     @Size(max = 1000,message = "Education description must not exceed 1000 characters!")
     private String education;

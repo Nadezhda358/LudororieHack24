@@ -29,7 +29,9 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/users/login","/users/registration","/abilities/get-abilities").permitAll()
+                        .requestMatchers("/users/home-page").hasAuthority("ROLE_USER")
+                        .requestMatchers("/abilities/add-ability").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
