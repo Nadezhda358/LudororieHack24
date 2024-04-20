@@ -34,11 +34,11 @@ public class User {
     private String mobile;
     @NotEmpty
     private String email;
-    @Size(max = 1000,message = "Education description must not exceed 1000 characters!")
+    @Size(max = 1000, message = "Education description must not exceed 1000 characters!")
     private String education;
-    @Size(max = 1000,message = "Education description must not exceed 1000 characters!")
+    @Size(max = 1000, message = "Education description must not exceed 1000 characters!")
     private String workplace;
-    @Size(max = 1000,message = "Education description must not exceed 1000 characters!")
+    @Size(max = 1000, message = "Education description must not exceed 1000 characters!")
     private String workExperience;
     @Enumerated(EnumType.STRING)
     private Role role;

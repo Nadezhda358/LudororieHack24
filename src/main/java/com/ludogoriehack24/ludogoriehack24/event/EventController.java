@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/event")
@@ -42,5 +43,37 @@ public class EventController {
     private String allEvents(Model model) {
         model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());
         return "/event/all";
+    }
+
+    @GetMapping("/participate/{eventId}")
+    public String participateEvent(@PathVariable("eventId") Long eventId, Model model, RedirectAttributes redirectAttributes) {
+        eventService.setParticipant(eventId);
+        model.addAttribute("eventsForUser", eventService.getEventDTOsParticipatedByUserId());
+        return "/event/all-for-user";
+    }
+
+    @GetMapping("/created-by-user")
+    public String createdEventsForUser(Model model) {
+        model.addAttribute("eventsByUser", eventService.getEventDTOsCreatedByUser());
+        return "/event/created-by-user";
+    }
+
+    @GetMapping("/participation-for-user")
+    public String participationForUser(Model model) {
+        model.addAttribute("eventsForUser", eventService.getEventDTOsParticipatedByUserId());
+        return "/event/all-for-user";
+    }
+
+    @GetMapping("/delete/{eventId}")
+    public String deleteEvent(@PathVariable("eventId") Long eventId, Model model) {
+        eventService.deleteEvent(eventId);
+        model.addAttribute("eventsByUser", eventService.getEventDTOsCreatedByUser());
+        return "/event/created-by-user";
+    }
+
+    @GetMapping("/view/{eventId}")
+    public String viewEvent(@PathVariable("eventId") Long eventId, Model model) {
+        model.addAttribute("eventDTO", eventService.getEventDTOForView(eventId));
+        return "/event/view";
     }
 }

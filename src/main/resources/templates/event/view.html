@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${eventDTO.name}"></title>
+</head>
+<body>
+<p th:text="'Име:' + ${eventDTO.name}"></p>
+<p th:text="'Описание: ' + ${eventDTO.description}"></p>
+<p th:text="'Начало: ' + ${#temporals.format(eventDTO.startDate, 'yyyy-MM-dd HH:mm')}"></p>
+<p th:text="'Край: ' + ${#temporals.format(eventDTO.endDate, 'yyyy-MM-dd HH:mm')}"></p>
+<p th:text="'Място: ' + ${eventDTO.location}"></p>
+<p th:text="'Организатор: ' + ${eventDTO.user.fullName}"></p>
+<p>Заявили участие:</p>
+<table>
+    <thead>
+        <tr>
+            <th>Потребителско име</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${eventDTO.users}">
+            <th th:text="${user.username}"></th>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

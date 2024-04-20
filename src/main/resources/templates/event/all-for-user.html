@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>My events</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+        /* Custom styles */
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <h2 class="my-4">You participate in:</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Location</th>
+        <th>Description</th>
+        <th>Organiser</th>
+        <th>Options</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="event : ${eventsForUser}">
+        <td th:text="${event.name} ?: 'N/A'"></td>
+        <td th:text="${event.startDate} ?: 'N/A'"></td>
+        <td th:text="${event.endDate} ?: 'N/A'"></td>
+        <td th:text="${event.location} ?: 'N/A'"></td>
+        <td th:text="${event.description} ?: 'N/A'"></td>
+        <td th:text="${event.user != null ? event.user.username : 'N/A'}"></td>
+        <td><a th:href="@{/event/view/{eventId}(eventId=${event.id})}">Детайли</a></td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+<!-- Bootstrap JavaScript (optional, if needed) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
