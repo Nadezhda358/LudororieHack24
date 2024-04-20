@@ -26,14 +26,14 @@
 <div th:replace="fragments :: nav"></div>
 
 <div class="container">
-    <h3 class="alert alert-success row">
+    <h3 class="alert alert-success row" th:if="${recommendedUsers != null and not #lists.isEmpty(recommendedUsers)}">
         <a href="#" class="arrow-link" style="display: inline-block; text-decoration: none; color: black">
             <span class="col">За Вас:</span>
             <img src="/img/arrow-right.png" alt="arrow-right" class="arrow-right">
         </a>
     </h3>
 
-    <div id="userCarousel" class="carousel-container">
+    <div id="userCarousel" class="carousel-container" th:if="${recommendedUsers != null and not #lists.isEmpty(recommendedUsers)}">
         <button id="prevButton" class="carousel-control-prev" >Назад</button>
         <div class="carousel-track-container">
             <div class="carousel-track">

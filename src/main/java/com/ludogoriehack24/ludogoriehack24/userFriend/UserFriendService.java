@@ -19,7 +19,9 @@ public class UserFriendService {
     public UserFriendDTO userFriendToUserFriendDTO(UserFriend userFriend) {
         return modelMapper.map(userFriend, UserFriendDTO.class);
     }
-
+    public UserFriend userFriendDTOToUserFriend(UserFriendDTO userFriendDTO) {
+        return modelMapper.map(userFriendDTO, UserFriend.class);
+    }
     public UserFriendDTO sendFriendRequest(Long friendId) throws Exception {
         User friend = userService.userDTOToUser(userService.getUserById(friendId));
         User user = userService.getLoggedUser();
@@ -36,7 +38,12 @@ public class UserFriendService {
                 .map(this::userFriendToUserFriendDTO)
                 .toList();
     }
-
+    public List<UserFriendDTO> getFriendsById(Long id){
+        List<UserFriend> userFriends = userFriendRepository.findByStatusAndFriendIdOrUserId(true, id);
+        return userFriends.stream()
+                .map(this::userFriendToUserFriendDTO)
+                .toList();
+    }
     public void deleteUserFriend(Long id){
         Optional<UserFriend> userFriend = userFriendRepository.findById(id);
         if (userFriend.isPresent()){
@@ -44,12 +51,15 @@ public class UserFriendService {
         }
     }
 
-    public void acceptUserFriend(Long id){
-        Optional<UserFriend> userFriend = userFriendRepository.findById(id);
-        if (userFriend.isPresent()){
-            userFriend.get().setAccepted(true);
-            userFriendRepository.save(userFriend.get());
-        }
+    public void acceptUserFriend(Long id) {
+        Optional<UserFriend> userFriendOptional = userFriendRepository.findById(id);
+        userFriendOptional.ifPresent(userFriend -> {
+            userFriend.setAccepted(true);
+            userFriendRepository.save(userFriend);
+
+            List<UserFriend> userFriendsFound = userFriendRepository.findByUserIdAndFriendId(userFriend.getFriend().getId(), userFriend.getUser().getId());
+            userFriendRepository.deleteAll(userFriendsFound);
+        });
     }
     public UserFriendDTO getUserFriendById(Long id) throws Exception {
         Optional<UserFriend> userFriend = userFriendRepository.findById(id);

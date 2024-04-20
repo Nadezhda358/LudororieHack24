@@ -5,6 +5,8 @@ import com.ludogoriehack24.ludogoriehack24.abilities.AbilityDTO;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityRepository;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityService;
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
+import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriend;
+import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriendDTO;
 import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriendService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -49,6 +51,8 @@ public class UserController {
         if (user.equals(currentUser)){
             model.addAttribute("friendRequests", userFriendService.getUnapprovedFriendRequestsByFriendId(currentUser.getId()));
         }
+        List<UserFriendDTO> userFriends = userFriendService.getFriendsById(userId);
+        model.addAttribute("userFriends", userFriends);
         return "/user/view_profile";
     }
 

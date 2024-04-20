@@ -43,5 +43,4 @@ public class UserFriendController {
         userFriendService.acceptUserFriend(userFriendId);
         return "redirect:/users/view-profile/" + id;
     }
-
 }
