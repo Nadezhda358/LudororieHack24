@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -65,5 +62,12 @@ public class EventController {
     public String participationForUser(Model model) {
         model.addAttribute("eventsForUser", eventService.getEventDTOsParticipatedByUserId());
         return "/event/all-for-user";
+    }
+
+    @GetMapping("/delete/{eventId}")
+    public String deleteEvent(@PathVariable("eventId") Long eventId, Model model) {
+        eventService.deleteEvent(eventId);
+        model.addAttribute("eventsByUser", eventService.getEventDTOsCreatedByUser());
+        return "/event/created-by-user";
     }
 }

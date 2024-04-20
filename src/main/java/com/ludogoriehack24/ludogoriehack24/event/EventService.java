@@ -80,4 +80,21 @@ public class EventService {
         List<Event> eventList = eventRepository.findAllByUserId(user.getId());
         return eventList.stream().map(this::eventToEventDTO).collect(Collectors.toList());
     }
+
+    public void deleteEvent(Long eventId) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            List<User> userList = event.getUsers();
+            for (User user : userList) {
+                List<Event> participatingEvents = user.getEvents();
+                participatingEvents.remove(event);
+                user.setEvents(participatingEvents);
+                userRepository.save(user);
+            }
+            eventRepository.deleteById(eventId);
+        }
+    }
+
+
 }

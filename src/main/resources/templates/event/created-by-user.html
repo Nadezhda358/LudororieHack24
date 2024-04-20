@@ -38,6 +38,7 @@
                 <td th:text="${event.description} ?: 'N/A'"></td>
                 <td th:text="${event.user != null ? event.user.username : 'N/A'}"></td>
                 <td>View...</td>
+                <td><a th:href="@{/event/delete/{eventId}(eventId=${event.id})}">Delete</a></td>
             </tr>
             </tbody>
 
