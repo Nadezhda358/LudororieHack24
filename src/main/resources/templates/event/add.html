@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add event</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        .container {
+            margin-top: 50px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="my-4">Add new event:</h2>
+    <form action="#" th:action="@{/event/submit}" th:object="${eventDTO}" method="post">
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label form-label">Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" th:field="*{name}"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="startDate" class="col-sm-2 col-form-label form-label">Start date:</label>
+            <div class="col-sm-10">
+                <input type="datetime-local" class="form-control" id="startDate" th:field="*{startDate}" />
+                <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="endDate" class="col-sm-2 col-form-label form-label">End date:</label>
+            <div class="col-sm-10">
+                <input type="datetime-local" class="form-control" id="endDate" th:field="*{endDate}"/>
+                <div th:text="${dateMessage != null} ? ${dateMessage} : ''"></div>
+                <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="location" class="col-sm-2 col-form-label form-label">Location:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="location" th:field="*{location}"/>
+                <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label form-label">Description:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="description" th:field="*{description}"/>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">SUBMIT</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Bootstrap JavaScript (optional, if needed) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
