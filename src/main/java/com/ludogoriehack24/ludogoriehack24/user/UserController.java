@@ -4,6 +4,7 @@ import com.ludogoriehack24.ludogoriehack24.config.AppConfig;
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.Banner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
