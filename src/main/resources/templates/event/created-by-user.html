@@ -32,16 +32,15 @@
             <tbody>
             <tr th:each="event : ${eventsByUser}">
                 <td th:text="${event.name} ?: 'N/A'"></td>
-                <td th:text="${event.startDate} ?: 'N/A'"></td>
-                <td th:text="${event.endDate} ?: 'N/A'"></td>
+                <td th:text="${#temporals.format(eventDTO.startDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></td>
+                <td th:text="${#temporals.format(eventDTO.endDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></td>
                 <td th:text="${event.location} ?: 'N/A'"></td>
                 <td th:text="${event.description} ?: 'N/A'"></td>
                 <td th:text="${event.user != null ? event.user.username : 'N/A'}"></td>
-                <td>View...</td>
+                <td><a th:href="@{/event/view/{eventId}(eventId=${event.id})}">Детайли</a></td>
                 <td><a th:href="@{/event/delete/{eventId}(eventId=${event.id})}">Delete</a></td>
             </tr>
             </tbody>
-
         </table>
     </div>
 </div>

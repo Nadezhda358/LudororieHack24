@@ -70,4 +70,10 @@ public class EventController {
         model.addAttribute("eventsByUser", eventService.getEventDTOsCreatedByUser());
         return "/event/created-by-user";
     }
+
+    @GetMapping("/view/{eventId}")
+    public String viewEvent(@PathVariable("eventId") Long eventId, Model model) {
+        model.addAttribute("eventDTO", eventService.getEventDTOForView(eventId));
+        return "/event/view";
+    }
 }

@@ -96,5 +96,11 @@ public class EventService {
         }
     }
 
-
+    public EventDTO getEventDTOForView(Long eventId) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+        if (optionalEvent.isPresent()) {
+            return modelMapper.map(optionalEvent.get(), EventDTO.class);
+        }
+        return null;
+    }
 }
