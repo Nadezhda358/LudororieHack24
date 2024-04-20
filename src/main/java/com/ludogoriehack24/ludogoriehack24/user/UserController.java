@@ -1,11 +1,11 @@
 package com.ludogoriehack24.ludogoriehack24.user;
 
-import com.ludogoriehack24.ludogoriehack24.config.AppConfig;
+import com.ludogoriehack24.ludogoriehack24.abilities.AbilityDTO;
+import com.ludogoriehack24.ludogoriehack24.abilities.AbilityService;
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.Banner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +24,17 @@ public class UserController {
     private UserService userService;
     private UserRepository userRepository;
     private ModelMapper modelMapper;
+    private AbilityService abilityService;
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @GetMapping("/home-page")
     public String showHomePage(Model model){
-        List<UserDTO> allUsers = userService.getAllUsers();
+        List<UserDTO> allUsers = userService.getAllUsersExceptLogged();
+        List<UserDTO> recommendedUsers = userService.getRecommendedUsers();
         model.addAttribute("allUsers", allUsers);
+        model.addAttribute("recommendedUsers", recommendedUsers);
         return "home_page.html";
     }
     @GetMapping("/login")
@@ -78,4 +81,12 @@ public class UserController {
         return password.equals(repeatPassword);
     }
 
+    @GetMapping("/all")
+    public String showAllUsers(Model model){
+        List<UserDTO> allUsers = userService.getAllUsersExceptLogged();
+        List<AbilityDTO> abilities = abilityService.getAbilities();
+        model.addAttribute("allUsers", allUsers);
+        model.addAttribute("allAbilities", abilities);
+        return "all_users.html";
+    }
 }
