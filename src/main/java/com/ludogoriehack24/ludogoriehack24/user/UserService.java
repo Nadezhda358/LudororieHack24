@@ -51,17 +51,6 @@ public class UserService {
                 .toList();
     }
 
-    public User getLoggedUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-        return userRepository.getUserByUsername(username);
-    }
-
     public List<UserDTO> getRecommendedUsers(){
         User loggedUser = getLoggedUser();
         List<User> users = userRepository.findUsersWithMatchingAbilities(loggedUser.getNeededAbilities(), loggedUser.getId());
