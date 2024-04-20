@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="'DM: ' + ${chatDTO.user1.username} + ' AND ' + ${chatDTO.user2.username}"></title>
 </head>
 <body>
-
+<h2 th:text="'This is the conversation between ' + ${chatDTO.user1.username} + ' and ' + ${chatDTO.user2.username}"></h2>
+<table>
+    <thead>
+    <tr>
+        <th>Time:</th>
+        <th>Message</th>
+        <th>Sender</th>
+        <th>Receiver</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="message : ${chatDTO.messages}">
+        <td th:text="${#temporals.format(message.time, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></td>
+        <td th:text="${message.text} ?: 'N/A'"></td>
+        <td th:text="${message.senderUser.username} ?: 'N/A'"></td>
+        <td th:text="${message.receiverUser.username} ?:'N/A'"></td>
+    </tr>
+    </tbody>
+</table>
+<h3>New message:</h3>
+<form action="#" th:action="@{/message/send}" th:object="${messageDTO}" method="post">
+    <input type="hidden" th:field="*{chat}" th:value="${chatDTO.id}"/>
+    <p>
+        Message:
+        <input type="text" th:field="*{text}"/>
+        <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
+    </p>
+    <input type="submit" value="Send"/>
+</form>
 </body>
 </html>

@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatDTO {
+    private Long id;
     private User user1;
 
     private User user2;

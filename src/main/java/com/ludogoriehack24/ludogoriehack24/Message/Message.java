@@ -23,12 +23,10 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "sender_user_id")
     private User senderUser;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "receiver_user_id")
     private User receiverUser;

@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDTO {
-    @NotNull
+    private Long id;
+
     private User senderUser;
 
-    @NotNull
     private User receiverUser;
 
     @NotEmpty(message = "Message must be at least 1 char!")
