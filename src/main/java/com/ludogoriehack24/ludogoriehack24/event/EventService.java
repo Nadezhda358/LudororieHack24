@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -51,16 +52,32 @@ public class EventService {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             User user = userRepository.getUserByUsername(authentication.getName());
             List<Event> eventList = user.getEvents();
-            eventList.add(event);
-            user.setEvents(eventList);
-            userRepository.save(user);
+            if (checkIfUserIsAlreadyParticipating(eventId, user.getId())) {
+                eventList.add(event);
+                user.setEvents(eventList);
+                userRepository.save(user);
+            }
         }
     }
 
-    public List<EventDTO> getEventDTOsByUserId() {
+    public boolean checkIfUserIsAlreadyParticipating(Long eventId, Long userId) {
+        List<Long> eventIds = userRepository.findEventIdsByUserId(userId);
+        if (eventIds.contains(eventId)) return false;
+        return true;
+    }
+
+    public List<EventDTO> getEventDTOsParticipatedByUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.getUserByUsername(authentication.getName());
+        List<Long> eventIdsList = userRepository.findEventIdsByUserId(user.getId());
+        List<Event> eventList = eventRepository.findAllById(eventIdsList);
+        return eventList.stream().map(this::eventToEventDTO).collect(Collectors.toList());
+    }
+
+    public List<EventDTO> getEventDTOsCreatedByUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.getUserByUsername(authentication.getName());
         List<Event> eventList = eventRepository.findAllByUserId(user.getId());
-        return eventList.stream().map(this::eventToEventDTO).toList();
+        return eventList.stream().map(this::eventToEventDTO).collect(Collectors.toList());
     }
 }

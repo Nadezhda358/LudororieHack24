@@ -51,12 +51,19 @@ public class EventController {
     @GetMapping("/participate/{eventId}")
     public String participateEvent(@PathVariable("eventId") Long eventId, Model model, RedirectAttributes redirectAttributes) {
         eventService.setParticipant(eventId);
-        model.addAttribute("eventsForUser", eventService.getEventDTOsByUserId());
+        model.addAttribute("eventsForUser", eventService.getEventDTOsParticipatedByUserId());
         return "/event/all-for-user";
     }
 
-//    @GetMapping("/all-for-user")
-//    public String eventsForUser(List<EventDTO> eventDTOList) {
-//
-//    }
+    @GetMapping("/created-by-user")
+    public String createdEventsForUser(Model model) {
+        model.addAttribute("eventsByUser", eventService.getEventDTOsCreatedByUser());
+        return "/event/created-by-user";
+    }
+
+    @GetMapping("/participation-for-user")
+    public String participationForUser(Model model) {
+        model.addAttribute("eventsForUser", eventService.getEventDTOsParticipatedByUserId());
+        return "/event/all-for-user";
+    }
 }
