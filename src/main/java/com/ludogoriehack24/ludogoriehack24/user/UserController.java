@@ -17,11 +17,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @AllArgsConstructor
@@ -40,8 +50,9 @@ public class UserController {
         return userService.editProfile(userId,model,request);
     }
     @PostMapping("/add-changes")
-    public String addChanges(UserDTO userDTO, BindingResult bindingResult, Model model,@RequestParam("selectedAbilitiesIds") List<Long> selectedAbilitiesIds,@RequestParam("searchedAbilitiesIds") List<Long> searchedAbilitiesIds){
-        return userService.addChanges(userDTO,bindingResult,model,selectedAbilitiesIds,searchedAbilitiesIds);
+    public String addChanges(UserDTO userDTO, BindingResult bindingResult, Model model,@RequestParam(name = "selectedAbilitiesIds", required = false) List<Long> selectedAbilitiesIds,
+                             @RequestParam(name = "searchedAbilitiesIds", required = false) List<Long> searchedAbilitiesIds,@RequestParam("profilePicture") MultipartFile profilePicture){
+        return userService.addChanges(userDTO,bindingResult,model,selectedAbilitiesIds,searchedAbilitiesIds,profilePicture);
     }
    @GetMapping("/view-profile/{userId}")
     public String viewProfile(@PathVariable("userId") Long userId, Model model,HttpServletRequest request){
@@ -74,23 +85,41 @@ public class UserController {
         model.addAttribute("selectedAbilities2",new ArrayList<AbilityDTO>());
         return "/user/registration";
     }
-
     @PostMapping("submit-registration")
-    public String saveUser(@Valid UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam("selectedAbilitiesIds") List<Long> selectedAbilitiesIds,@RequestParam("searchedAbilitiesIds") List<Long> searchedAbilitiesIds) {
+    public String saveUser(@Valid UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam(name = "selectedAbilitiesIds", required = false) List<Long> selectedAbilitiesIds,
+                           @RequestParam(name = "searchedAbilitiesIds", required = false) List<Long> searchedAbilitiesIds,@RequestParam("profilePicture") MultipartFile profilePicture) {
         List<Ability> abilities = abilityRepository.findAllByIdIn(selectedAbilitiesIds);
         List<Ability> searched = abilityRepository.findAllByIdIn(searchedAbilitiesIds);
         if (bindingResult.hasErrors()) {
+            model.addAttribute("abilities",abilityRepository.findAll());
             return "/user/registration";
         }
         if (!comparePasswords(userDTO.getPassword(), userDTO.getRepeatPassword())) {
             model.addAttribute("passwordsDoNotMatch", "Passwords do not match!");
+            model.addAttribute("abilities",abilityRepository.findAll());
             return "/user/registration";
         }
         User user = modelMapper.map(userDTO, User.class);
         List<Object> userPresentObj = isUserPresent(user);
         if ((Boolean) userPresentObj.get(0)) {
-
+            model.addAttribute("abilities",abilityRepository.findAll());
             return "/user/registration";
+        }
+        if (!profilePicture.isEmpty()) {
+            try {
+                String fileName = UUID.randomUUID().toString();
+                String originalFileName = profilePicture.getOriginalFilename();
+                String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                fileName += fileExtension;
+                Path uploadDir = Paths.get("src/main/resources/static/img");
+                Files.createDirectories(uploadDir);
+                try (InputStream inputStream = profilePicture.getInputStream()) {
+                    Files.copy(inputStream, uploadDir.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                }
+                user.setProfileImageName(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         List<Ability> abilityList = new ArrayList<>();
         for (int i = 0; i < abilities.size(); i++) {

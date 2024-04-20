@@ -38,10 +38,12 @@
         <p th:text="'Education:' +  ${user.getEducation()}"></p>
         <p th:text="'Workplace:' +  ${user.getWorkplace()}"></p>
         <p th:text="'Work experience:' +  ${user.getWorkExperience()}"></p>
+        <p th:text="'Abilities:'"></p>
         <div th:each="ability : ${user.getUserAbilities()}">
             <p th:text="${ability.getName()}"></p>
         </div>
-        <div th:each="ability : ${user.getUserAbilities()}">
+        <p th:text="'Needed abilities:'"></p>
+        <div th:each="ability : ${user.getNeededAbilities()}">
             <p th:text="${ability.getName()}"></p>
         </div>
         <a th:if="${currentUser.id == userId}" class="btn btn-primary" th:href="@{/users/edit-profile/{userId}(userId=${user.id})}">Edit profile</a>

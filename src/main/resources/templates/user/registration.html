@@ -53,38 +53,38 @@
 </head>
 <body>
 <h2>Registration Form</h2>
-<form action="#" th:action="@{/users/submit-registration}" th:object="${userDTO}" method="post">
+<form action="#" th:action="@{/users/submit-registration}" th:object="${userDTO}" method="post" enctype="multipart/form-data">
     <div th:if="${passwordsDoNotMatch}" style="color: red;">
         <p th:text="${passwordsDoNotMatch}"></p>
     </div>
     <div class="form-group">
         <label>Full Name:</label>
-        <input type="text" th:field="*{fullName}" class="form-control" />
+        <input type="text" th:field="*{fullName}" class="form-control" required/>
         <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
     </div>
     <div class="form-group">
         <label>Username:</label>
-        <input type="text" th:field="*{username}" class="form-control" />
+        <input type="text" th:field="*{username}" class="form-control" required/>
         <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
     </div>
     <div class="form-group">
         <label>Password:</label>
-        <input type="password" th:field="*{password}" class="form-control" />
+        <input type="password" th:field="*{password}" class="form-control" required/>
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     </div>
     <div class="form-group">
         <label>Repeat password:</label>
-        <input type="password" th:field="*{repeatPassword}" class="form-control" />
+        <input type="password" th:field="*{repeatPassword}" class="form-control" required/>
         <span th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></span>
     </div>
     <div class="form-group">
         <label>Email:</label>
-        <input type="text" th:field="*{email}" class="form-control" />
+        <input type="text" th:field="*{email}" class="form-control" required/>
         <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
     </div>
     <div class="form-group">
         <label>Mobile:</label>
-        <input type="text" th:field="*{mobile}" class="form-control" />
+        <input type="text" th:field="*{mobile}" class="form-control" required/>
         <span th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></span>
     </div>
     <div class="form-group">
@@ -111,7 +111,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="searchedAbilitiesIds">Abilities:</label>
+        <label for="searchedAbilitiesIds">Needed Abilities:</label>
         <select id="searchedAbilitiesIds" name="searchedAbilitiesIds" class="form-control" multiple>
             <option th:each="ability : ${abilities}"
                     th:value="${ability.id}"
@@ -119,9 +119,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label>Profile image:</label>
-        <input type="file" name="profileImage" accept="image/*" class="form-control-file" />
-        <span th:if="${#fields.hasErrors('profileImageName')}" th:errors="*{profileImageName}"></span>
+        <label>Profile Picture:</label>
+        <input type="file" name="profilePicture" class="form-control-file" />
     </div>
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
