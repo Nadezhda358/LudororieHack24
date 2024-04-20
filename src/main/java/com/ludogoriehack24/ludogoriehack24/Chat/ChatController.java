@@ -18,6 +18,7 @@ public class ChatController {
     @GetMapping("/{userReceiverId}")
     public String startChat(@PathVariable("userReceiverId") Long userReceiverId, Model model) {
         ChatDTO chatDTO = chatService.startChat(userReceiverId);
+//        if (chatDTO == null) return "/";
         model.addAttribute("chatDTO", chatDTO);
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setChat(chatService.chatDTOToChat(chatDTO));

@@ -47,6 +47,7 @@ public class ChatService {
     public boolean checkIfChatCanBeStarted(User user2) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.getUserByUsername(authentication.getName());
+//        if (user.getId() == user2.getId()) return false;
         Chat optionalChat = chatRepository.findChatByUserIds(user.getId(), user2.getId());
         if (optionalChat != null) return false;
         return true;
