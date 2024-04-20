@@ -1,0 +1,51 @@
+.container{
+    margin-top: 50px;
+}
+.card-img-top{
+    height: 200px;
+    object-fit: cover;
+}
+.btn-more {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.card{
+    position: relative;
+    height: 100%;
+}
+.arrow-right{
+    float: right;
+    align-self: flex-end;
+    width: 50px;
+}
+.alert{
+    padding-bottom: 0;
+    padding-top: 10px;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+#prevButton,
+#nextButton {
+    color: black;
+    padding: 0;
+    margin: 0;
+}
+
+#userCarousel .card-container {
+    margin-bottom: 10px;
+}

@@ -29,7 +29,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/users/home-page","/users/edit-profile/**","/users/view-profile/**").authenticated()
+                        .requestMatchers("/users/home-page","/users/edit-profile/**","/users/view-profile/**", "/users/all", "/event**").authenticated()
                         .requestMatchers("/users/**").permitAll()
                         .requestMatchers("/users/view-profile").hasAuthority("ROLE_USER")
                         .requestMatchers("/abilities/add-ability").hasAuthority("ROLE_ADMIN")

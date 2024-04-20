@@ -39,8 +39,33 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
-        List<User> villages = userRepository.findAll();
-        return villages.stream()
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(this::userToUserDTO)
+                .toList();
+    }
+    public List<UserDTO> getAllUsersExceptLogged() {
+        List<User> users = userRepository.findAllExceptUser(getLoggedUser().getId());
+        return users.stream()
+                .map(this::userToUserDTO)
+                .toList();
+    }
+
+    public User getLoggedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return userRepository.getUserByUsername(username);
+    }
+
+    public List<UserDTO> getRecommendedUsers(){
+        User loggedUser = getLoggedUser();
+        List<User> users = userRepository.findUsersWithMatchingAbilities(loggedUser.getNeededAbilities(), loggedUser.getId());
+        return users.stream()
                 .map(this::userToUserDTO)
                 .toList();
     }

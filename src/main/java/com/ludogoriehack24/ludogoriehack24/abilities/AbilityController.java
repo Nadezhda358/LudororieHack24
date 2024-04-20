@@ -1,5 +1,6 @@
 package com.ludogoriehack24.ludogoriehack24.abilities;
 
+
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -36,4 +37,5 @@ public class AbilityController {
         model.addAttribute("allAbilities",abilityRepository.findAll());
         return "/ability/all";
     }
+
 }

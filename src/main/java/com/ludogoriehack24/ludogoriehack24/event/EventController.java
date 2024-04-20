@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/event")
@@ -40,6 +39,60 @@ public class EventController {
 
     @GetMapping("/all")
     private String allEvents(Model model) {
+        model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());
+        return "/event/all";
+    }
+
+    @GetMapping("/participate/{eventId}")
+    public String participateEvent(@PathVariable("eventId") Long eventId, Model model, RedirectAttributes redirectAttributes) {
+        eventService.setParticipant(eventId);
+        model.addAttribute("eventsForUser", eventService.getEventDTOsParticipatedByUserId());
+        return "/event/all-for-user";
+    }
+
+    @GetMapping("/created-by-user")
+    public String createdEventsForUser(Model model) {
+        model.addAttribute("eventsByUser", eventService.getEventDTOsCreatedByUser());
+        return "/event/created-by-user";
+    }
+
+    @GetMapping("/participation-for-user")
+    public String participationForUser(Model model) {
+        model.addAttribute("eventsForUser", eventService.getEventDTOsParticipatedByUserId());
+        return "/event/all-for-user";
+    }
+
+    @GetMapping("/delete/{eventId}")
+    public String deleteEvent(@PathVariable("eventId") Long eventId, Model model) {
+        eventService.deleteEvent(eventId);
+        model.addAttribute("eventsByUser", eventService.getEventDTOsCreatedByUser());
+        return "/event/created-by-user";
+    }
+
+    @GetMapping("/view/{eventId}")
+    public String viewEvent(@PathVariable("eventId") Long eventId, Model model) {
+        model.addAttribute("eventDTO", eventService.getEventDTOById(eventId));
+        return "/event/view";
+    }
+
+    @GetMapping("/update/{eventId}")
+    public String updateEvent(@PathVariable("eventId") Long eventId, Model model) {
+        model.addAttribute("eventDTO", eventService.getEventDTOById(eventId));
+        return "/event/update";
+    }
+
+    @PostMapping("/update-submit")
+    public String updateSubmit(@Valid EventDTO eventDTO, BindingResult bindingResult, Model model) {
+        if (!eventService.canUserUpdateEvent(eventDTO)) return "redirect:/event/created-by-user";
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("eventDTO", eventDTO);
+            return "/event/update";
+        }
+        if (!eventService.checkIfDateIsValid(eventDTO)) {
+            model.addAttribute("dateMessage", "Invalid dates!");
+            return "/event/add";
+        }
+        eventRepository.save(eventService.eventDTOToEvent(eventDTO));
         model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());
         return "/event/all";
     }
