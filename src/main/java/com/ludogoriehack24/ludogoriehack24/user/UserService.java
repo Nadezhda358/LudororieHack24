@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 
 @Service
@@ -17,7 +19,9 @@ public class UserService {
     public UserDTO userToUserDTO(User user) {
         return modelMapper.map(user, UserDTO.class);
     }
-
+    public User userDTOToUser(UserDTO userDTO) {
+        return modelMapper.map(userDTO, User.class);
+    }
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -48,5 +52,12 @@ public class UserService {
         return users.stream()
                 .map(this::userToUserDTO)
                 .toList();
+    }
+    public UserDTO getUserById(Long id) throws Exception {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            return userToUserDTO(user.get());
+        }
+        throw new Exception();
     }
 }
