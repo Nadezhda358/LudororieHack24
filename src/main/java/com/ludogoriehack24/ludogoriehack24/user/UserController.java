@@ -31,7 +31,9 @@ public class UserController {
     @GetMapping("/home-page")
     public String showHomePage(Model model){
         List<UserDTO> allUsers = userService.getAllUsers();
+        List<UserDTO> recommendedUsers = userService.getRecommendedUsers();
         model.addAttribute("allUsers", allUsers);
+        model.addAttribute("recommendedUsers", recommendedUsers);
         return "home_page.html";
     }
     @GetMapping("/login")

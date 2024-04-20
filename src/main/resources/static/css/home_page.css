@@ -23,3 +23,25 @@
     padding-bottom: 0;
     padding-top: 10px;
 }
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+#prevButton,
+#nextButton {
+    color: black;
+    padding: 0;
+    margin: 0;
+}
