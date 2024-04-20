@@ -13,9 +13,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @AllArgsConstructor
@@ -44,7 +52,7 @@ public class UserController {
         return "/user/registration";
     }
     @PostMapping("submit-registration")
-    public String saveUser(@Valid UserDTO userDTO, BindingResult bindingResult, Model model){
+    public String saveUser(@Valid UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam("profileImage") MultipartFile profileImage){
         if (bindingResult.hasErrors()){
             return "/user/registration";
         }
@@ -61,6 +69,17 @@ public class UserController {
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         user.setEnabled(true);
         user.setRole(Role.ROLE_USER);
+        if (!profileImage.isEmpty()) {
+            try {
+                String uploadDir = "src/main/resources/static/img"; // Path to static/img directory
+                String fileName = UUID.randomUUID().toString() + "-" + profileImage.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, fileName);
+                Files.copy(profileImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                userDTO.setProfileImageName("/img/" + fileName); // Path relative to the project root
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         userRepository.save(user);
         return "redirect:/users/login";
     }

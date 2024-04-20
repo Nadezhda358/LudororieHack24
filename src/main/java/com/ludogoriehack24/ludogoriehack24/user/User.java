@@ -59,9 +59,15 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
+    @Column(name = "profile_image_path")
     private String profileImageName;
     @Column(columnDefinition = "boolean DEFAULT '1'")
     private boolean enabled;
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImageName = profileImagePath;
+    }
+
+
 
     //role
 }

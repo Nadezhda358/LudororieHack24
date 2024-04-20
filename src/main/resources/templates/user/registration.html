@@ -109,7 +109,7 @@
 </head>
 <body>
 <h2>Registration Form</h2>
-<form action="#" th:action="@{/users/submit-registration}" th:object="${userDTO}" method="post">
+<form action="#" th:action="@{/users/submit-registration}" th:object="${userDTO}" method="post" enctype="multipart/form-data">
     <div th:if="${passwordsDoNotMatch}" style="color: red;">
         <p th:text="${passwordsDoNotMatch}"></p>
     </div>
