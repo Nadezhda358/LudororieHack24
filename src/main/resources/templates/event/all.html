@@ -2,52 +2,62 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Events</title>
+    <title>Събития</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Custom styles */
-        .table th,
-        .table td {
-            vertical-align: middle;
+        .event-card {
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .event-card .card-body {
+            padding: 20px;
+        }
+        .event-card .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .event-card .card-text {
+            color: #6c757d;
+        }
+        .event-card .options {
+            text-align: right;
+        }
+        .event-card .options a {
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2 class="my-4">All events:</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>Organiser</th>
-                <th>Options</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="event : ${allEventDTOs}">
-                <td th:text="${event.name} ?: 'N/A'"></td>
-<!--                <td th:text="${event.startDate} ?: 'N/A'"></td>-->
-<!--                <td th:text="${event.endDate} ?: 'N/A'"></td>-->
-                <td th:text="${#temporals.format(event.startDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></td>
-                <td th:text="${#temporals.format(event.endDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></td>
-                <td th:text="${event.location} ?: 'N/A'"></td>
-                <td th:text="${event.description} ?: 'N/A'"></td>
-                <td th:text="${event.user != null ? event.user.username : 'N/A'}"></td>
-                <td><a th:href="@{/event/participate/{eventId}(eventId=${event.id})}">Participate</a></td>
-                <td><a th:href="@{/event/view/{eventId}(eventId=${event.id})}">Детайли</a></td>
-            </tr>
-            </tbody>
-
-        </table>
+    <h2 class="my-4">Всички събития:</h2>
+    <div class="row">
+        <div th:each="event : ${allEventDTOs}" class="col-lg-4 col-md-6">
+            <div class="event-card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${event.name} ?: 'N/A'"></h5>
+                    <p class="card-text">
+                        <strong>Начало:</strong> <span th:text="${#temporals.format(event.startDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></span><br>
+                        <strong>Край:</strong> <span th:text="${#temporals.format(event.endDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></span><br>
+                        <strong>Място:</strong> <span th:text="${event.location} ?: 'N/A'"></span><br>
+                        <strong>Описание:</strong> <span th:text="${event.description} ?: 'N/A'"></span><br>
+                        <strong>Организатор:</strong> <span th:text="${event.user != null ? event.user.username : 'N/A'}"></span>
+                    </p>
+                    <div class="options">
+                        <a th:href="@{/event/participate/{eventId}(eventId=${event.id})}" class="btn btn-primary">Участвай</a>
+                        <a th:href="@{/event/view/{eventId}(eventId=${event.id})}" class="btn btn-secondary">Още</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!-- Bootstrap JavaScript (optional, if needed) -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
