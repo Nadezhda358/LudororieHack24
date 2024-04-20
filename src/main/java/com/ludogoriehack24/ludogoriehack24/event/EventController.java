@@ -6,8 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/event")
@@ -43,4 +47,16 @@ public class EventController {
         model.addAttribute("allEventDTOs", eventService.findAllEventDTOs());
         return "/event/all";
     }
+
+    @GetMapping("/participate/{eventId}")
+    public String participateEvent(@PathVariable("eventId") Long eventId, Model model, RedirectAttributes redirectAttributes) {
+        eventService.setParticipant(eventId);
+        model.addAttribute("eventsForUser", eventService.getEventDTOsByUserId());
+        return "/event/all-for-user";
+    }
+
+//    @GetMapping("/all-for-user")
+//    public String eventsForUser(List<EventDTO> eventDTOList) {
+//
+//    }
 }

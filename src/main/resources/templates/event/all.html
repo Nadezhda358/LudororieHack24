@@ -37,7 +37,7 @@
                 <td th:text="${event.location} ?: 'N/A'"></td>
                 <td th:text="${event.description} ?: 'N/A'"></td>
                 <td th:text="${event.user != null ? event.user.username : 'N/A'}"></td>
-                <td>options...</td>
+                <td><a th:href="@{/event/participate/{eventId}(eventId=${event.id})}">Participate</a></td>
             </tr>
             </tbody>
 

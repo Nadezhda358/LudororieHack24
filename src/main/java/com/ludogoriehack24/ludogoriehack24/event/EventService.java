@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -41,5 +42,25 @@ public class EventService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.getUserByUsername(authentication.getName());
         eventDTO.setUser(user);
+    }
+
+    public void setParticipant(Long eventId) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            User user = userRepository.getUserByUsername(authentication.getName());
+            List<Event> eventList = user.getEvents();
+            eventList.add(event);
+            user.setEvents(eventList);
+            userRepository.save(user);
+        }
+    }
+
+    public List<EventDTO> getEventDTOsByUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.getUserByUsername(authentication.getName());
+        List<Event> eventList = eventRepository.findAllByUserId(user.getId());
+        return eventList.stream().map(this::eventToEventDTO).toList();
     }
 }
