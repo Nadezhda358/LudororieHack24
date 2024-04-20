@@ -26,6 +26,7 @@ public class UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
     private AbilityRepository abilityRepository;
+
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -63,6 +64,9 @@ public class UserService {
         }
         String referer = request.getHeader("referer");
         return "redirect:" + referer;
+    }
+    public boolean comparePasswords(String password, String repeatPassword) {
+        return password.equals(repeatPassword);
     }
     public String addChanges(UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam("selectedAbilitiesIds") List<Long> selectedAbilitiesIds,@RequestParam("searchedAbilitiesIds") List<Long> searchedAbilitiesIds) {
         List<Ability> abilities = abilityRepository.findAllByIdIn(selectedAbilitiesIds);

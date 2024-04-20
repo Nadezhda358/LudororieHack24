@@ -1,51 +1,118 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  xmlns:sec="http://www.w3.org/1999/xhtml">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Profile</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div>-->
-<!--    <p th:text="'Full name:' + ${user.getFullName}"></p>-->
-<!--    <p th:text="'Username:'  + ${user.getUsername}"></p>-->
-<!--    <p th:text="'Mobile:' +  ${user.getMobile}"></p>-->
-<!--    <p th:text="'Email:' +  ${user.getEmail}"></p>-->
-<!--    <p th:text="'Education:' +  ${user.getEducation}"></p>-->
-<!--    <p th:text="'Workplace:' +  ${user.getWorkplace}"></p>-->
-<!--    <p th:text="'Work experience:' +  ${user.getWorkExperience}"></p>-->
-<!--    <div th:each="ability : ${user.getUserAbilities()}">-->
-<!--                    <td th:text="${ability.getName()}"></td>-->
-<!--                </div>-->
-<!--    <a th:if="${currentUser.id == userId}" class="btn btn-primary" th:href="@{/users/edit-profile/{userId}(userId=${user.id})}">Edit profile</a>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/view_profile.css">
+    <link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
+<div th:replace="fragments :: nav"></div>
 <div class="container">
-    <div>
-        <p th:text="'Full name:' + ${user.getFullName()}"></p>
-        <p th:text="'Username:'  + ${user.getUsername()}"></p>
-        <p th:text="'Mobile:' +  ${user.getMobile()}"></p>
-        <p th:text="'Email:' +  ${user.getEmail()}"></p>
-        <p th:text="'Education:' +  ${user.getEducation()}"></p>
-        <p th:text="'Workplace:' +  ${user.getWorkplace()}"></p>
-        <p th:text="'Work experience:' +  ${user.getWorkExperience()}"></p>
-        <div th:each="ability : ${user.getUserAbilities()}">
-            <p th:text="${ability.getName()}"></p>
+
+    <section>
+        <form th:if="${currentUser.id != userId}" method="post" th:action="@{/user-friends/friend-request/{friendId}(friendId=${user.id})}" style="padding-bottom: 20px;">
+            <input type="hidden" name="friendId" th:value="${user.id}" />
+            <button type="submit" class="btn btn-primary">Добави приятел</button>
+        </form>
+        <div class="row">
+        <div class="col-lg-6">
+            <img th:src="${user.profileImageName != null ? '/img/' + user.profileImageName : '/img/default.png'}"
+                 onerror="this.onerror=null; this.src='/img/no_img.png';"
+                 class="profile-img"
+                 alt="User Image">
         </div>
-        <div th:each="ability : ${user.getUserAbilities()}">
-            <p th:text="${ability.getName()}"></p>
+        <div class="col-lg-6">
+            <h1 th:text="${user.getFullName()}" class="text-center"></h1>
+            <p>
+                <span class="title">Потребителско име:</span>
+                <span th:text="${user.getUsername()}"></span>
+            </p>
+
+            <p>
+                <span class="title">Телефонен номер:</span>
+                <span th:text="${user.getMobile()}"></span>
+            </p>
+
+            <p>
+                <span class="title">Имейл:</span>
+                <span th:text="${user.getEmail()}"></span>
+            </p>
+
+            <p>
+                <span class="title">Образование:</span>
+                <span th:text="${user.getEducation()}"></span>
+            </p>
+
+            <p>
+                <span class="title">Образование:</span>
+                <span th:text="${user.getEducation()}"></span>
+            </p>
+
+            <p>
+                <span class="title">Работно място:</span>
+                <span th:text="${user.getWorkplace()}"></span>
+            </p>
+
+            <p>
+                <span class="title">Професионален опит:</span>
+                <span th:text="${user.getWorkExperience()}"></span>
+            </p>
+
+            <p>
+                <span class="title">Умения:</span>
+                <div>
+                    <span th:each="ability, iterStat : ${user.getUserAbilities()}">
+                        <span th:text="${ability.getName()}"></span><span th:if="${!iterStat.last}">, </span>
+                    </span>
+                </div>
+            </p>
+
+            <p>
+                <span class="title">Търси:</span>
+                <div>
+                    <span th:each="ability, iterStat : ${user.getNeededAbilities()}">
+                        <span th:text="${ability.getName()}"></span><span th:if="${!iterStat.last}">,</span>
+                    </span>
+                </div>
+            </p>
+
+            <a th:if="${currentUser.id == userId}" class="btn btn-primary" th:href="@{/users/edit-profile/{userId}(userId=${user.id})}">Edit profile</a>
         </div>
-        <a th:if="${currentUser.id == userId}" class="btn btn-primary" th:href="@{/users/edit-profile/{userId}(userId=${user.id})}">Edit profile</a>
-    </div>
+        </div>
+    </section>
+    <section th:if="${currentUser.id == userId}">
+        <h3>Покани за приятелсто:</h3>
+        <div>
+            <table class="table table-hover col-lg-9 col-md-12 col-sm-12">
+                <tbody>
+                    <tr th:each="userFriend : ${friendRequests}">
+                        <td>
+                            <img th:src="${userFriend.user.profileImageName != null ? '/img/' + userFriend.user.profileImageName : '/img/default.png'}"
+                                 onerror="this.onerror=null; this.src='/img/no_img.png';"
+                                 class="img"
+                                 alt="User Image">
+                        </td>
+                        <td>
+                            <a th:text="${userFriend.user.fullName}" th:href="@{/users/view-profile/{userId}(userId=${userFriend.user.id})}" id="name-link"></a>
+                        </td>
+                        <td>
+                            <form method="post" th:action="@{/user-friends/accept/{userFriendId}(userFriendId=${userFriend.id})}">
+                                <button type="submit" class="btn btn-success">Приеми</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" th:action="@{/user-friends/delete/{userFriendId}(userFriendId=${userFriend.id})}">
+                                <input type="hidden" name="friendId" th:value="${user.id}" />
+                                <button type="submit" class="btn btn-danger">Откажи</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 </body>
 </html>

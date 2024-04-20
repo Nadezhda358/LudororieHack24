@@ -1,13 +1,11 @@
 package com.ludogoriehack24.ludogoriehack24.userFriend;
 
 import com.ludogoriehack24.ludogoriehack24.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserFriendDTO {

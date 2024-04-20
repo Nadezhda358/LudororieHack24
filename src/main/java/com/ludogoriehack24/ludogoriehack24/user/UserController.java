@@ -3,17 +3,13 @@ package com.ludogoriehack24.ludogoriehack24.user;
 import com.ludogoriehack24.ludogoriehack24.abilities.Ability;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityDTO;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityRepository;
-import com.ludogoriehack24.ludogoriehack24.config.AppConfig;
-import com.ludogoriehack24.ludogoriehack24.abilities.AbilityDTO;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityService;
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
+import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriendService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.Banner;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +28,7 @@ public class UserController {
     private ModelMapper modelMapper;
     private AbilityRepository abilityRepository;
     private AbilityService abilityService;
+    private final UserFriendService userFriendService;
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -49,6 +46,9 @@ public class UserController {
         User currentUser = userService.getLoggedUser();
         model.addAttribute("currentUser",currentUser);
         model.addAttribute("user",user);
+        if (user.equals(currentUser)){
+            model.addAttribute("friendRequests", userFriendService.getUnapprovedFriendRequestsByFriendId(currentUser.getId()));
+        }
         return "/user/view_profile";
     }
 
@@ -129,6 +129,6 @@ public class UserController {
         List<AbilityDTO> abilities = abilityService.getAbilities();
         model.addAttribute("allUsers", allUsers);
         model.addAttribute("allAbilities", abilities);
-        return "all_users.html";
+        return "/user/all_users.html";
     }
 }
