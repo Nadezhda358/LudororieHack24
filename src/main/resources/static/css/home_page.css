@@ -45,3 +45,7 @@
     padding: 0;
     margin: 0;
 }
+
+#userCarousel .card-container {
+    margin-bottom: 10px;
+}

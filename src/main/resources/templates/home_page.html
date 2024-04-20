@@ -39,7 +39,7 @@
         <button id="prevButton" class="carousel-control-prev" >Назад</button>
         <div class="carousel-track-container">
             <div class="carousel-track">
-                <div th:each="user : ${recommendedUsers}" class="col-lg-3 col-md-4 col-sm-12 pb-3">
+                <div th:each="user : ${recommendedUsers}" class="col-lg-3 col-md-4 col-sm-12 pb-3 card-container">
                 <div class="card" style="min-width: 300px;">
                      <img th:src="${user.profileImageName != null ? '/img/' + user.profileImageName : '/img/default.png'}"
                           onerror="this.onerror=null; this.src='/img/no_img.png';"

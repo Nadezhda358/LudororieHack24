@@ -10,6 +10,8 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User,Long> {
     User getUserByUsername(@Param("username") String username);
     User getUserByEmail(@Param("email") String email);
+    @Query("SELECT u FROM User u WHERE u.id <> :userId")
+    List<User> findAllExceptUser(@Param("userId") Long userId);
     @Query("SELECT u FROM User u " +
             "JOIN u.userAbilities a " +
             "WHERE a IN :neededAbilities " +

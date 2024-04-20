@@ -16,7 +16,17 @@
 <body>
 <div th:replace="fragments :: nav"></div>
 <div class="container">
-    <input type="text" id="searchInput" placeholder="Type to search users" class="form-control searchbar col-lg-4 col-md-12 col-sm-12">
+    <div class="row">
+        <input type="text" id="searchInput" placeholder="Type to search users" class="form-control searchbar">
+
+        <!--<div id="abilities-container">
+            <label for="abilities">Търсени умения: </label>
+            <select class="form-control searchbar" id="abilities" multiple>
+                <option th:each="ability : ${allAbilities}" th:text="${ability.name}" th:value="${ability.name}"></option>
+            </select>
+        </div>-->
+    </div>
+
     <div class="row" id="usersContainer">
         <div th:each="user : ${allUsers}" class="col-lg-3 col-md-4 col-sm-12 pb-3 user-card">
             <div class="card">
@@ -28,12 +38,12 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${user.fullName}"></h5>
                     <p class="card-text">
-                        <span th:each="ability, iterStat : ${user.userAbilities}">
+                        <span th:each="ability, iterStat : ${user.userAbilities}" class="user-abilities">
                             <span th:text="${ability.name}"></span><span th:unless="${iterStat.last}">,</span>
                         </span>
                     </p>
                     <br>
-                    <a th:href="@{#}" class="btn btn-success btn-more">More</a>
+                    <a th:href="@{#}" class="btn btn-success btn-more">Още</a>
                 </div>
             </div>
         </div>
