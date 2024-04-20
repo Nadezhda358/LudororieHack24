@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<div>
+    <p th:text="'Full name:' + ${user.getFullName}"></p>
+    <p th:text="'Username:'  + ${user.getUsername}"></p>
+    <p th:text="'Mobile:' +  ${user.getMobile}"></p>
+    <p th:text="'Email:' +  ${user.getEmail}"></p>
+    <p th:text="'Education:' +  ${user.getEducation}"></p>
+    <p th:text="'Workplace:' +  ${user.getWorkplace}"></p>
+    <p th:text="'Work experience:' +  ${user.getWorkExperience}"></p>
+    <div th:each="ability : ${user.getUserAbilities()}">
+                    <td th:text="${ability.getName()}"></td>
+                </div>
+    <a th:if="${currentUser.id == userId}" class="btn btn-primary" th:href="@{/users/edit-profile/{userId}(userId=${user.id})}">Edit profile</a>
+</div>
+</body>
+</html>
