@@ -1,3 +1,4 @@
+
 package com.ludogoriehack24.ludogoriehack24.user;
 
 import com.ludogoriehack24.ludogoriehack24.abilities.Ability;
@@ -18,6 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @NotEmpty
     private String fullName;
     @NotEmpty

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit profile</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .login-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2>Registration Form</h2>
+<form action="#" th:action="@{/users/add-changes}" th:object="${userDTO}" method="post">
+  <input type="hidden" th:field="${userDTO.id}" />
+  <div th:if="${passwordsDoNotMatch}" style="color: red;">
+    <p th:text="${passwordsDoNotMatch}"></p>
+  </div>
+  <div class="form-group">
+    <label>Full Name:</label>
+    <input type="text" th:field="*{fullName}" class="form-control" />
+    <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
+  </div>
+  <div class="form-group">
+    <label>Username:</label>
+    <input type="text" th:field="*{username}" class="form-control" />
+    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+  </div>
+  <div class="form-group">
+    <label>Password:</label>
+    <input type="password" th:field="*{password}" class="form-control" />
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+  </div>
+  <div class="form-group">
+    <label>Repeat password:</label>
+    <input type="password" th:field="*{repeatPassword}" class="form-control" />
+    <span th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></span>
+  </div>
+  <div class="form-group">
+    <label>Email:</label>
+    <input type="text" th:field="*{email}" class="form-control" />
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+  </div>
+  <div class="form-group">
+    <label>Mobile:</label>
+    <input type="text" th:field="*{mobile}" class="form-control" />
+    <span th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></span>
+  </div>
+  <div class="form-group">
+    <label>Education:</label>
+    <input type="text" th:field="*{education}" class="form-control" />
+    <span th:if="${#fields.hasErrors('education')}" th:errors="*{education}"></span>
+  </div>
+  <div class="form-group">
+    <label>Workplace:</label>
+    <input type="text" th:field="*{workplace}" class="form-control" />
+    <span th:if="${#fields.hasErrors('workplace')}" th:errors="*{workplace}"></span>
+  </div>
+  <div class="form-group">
+    <label>Work experience:</label>
+    <input type="text" th:field="*{workExperience}" class="form-control" />
+    <span th:if="${#fields.hasErrors('workExperience')}" th:errors="*{workExperience}"></span>
+  </div>
+  <div class="form-group">
+    <label for="selectedAbilitiesIds">Abilities:</label>
+    <select id="selectedAbilitiesIds" name="selectedAbilitiesIds" class="form-control" multiple>
+      <option th:each="ability : ${abilities}"
+              th:value="${ability.id}"
+              th:text="${ability.name}"></option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Profile image:</label>
+    <input type="file" name="profileImage" accept="image/*" class="form-control-file" />
+    <span th:if="${#fields.hasErrors('profileImageName')}" th:errors="*{profileImageName}"></span>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Submit" class="btn btn-primary" />
+  </div>
+  <div class="login-link">
+    <a th:href="@{/users/login}">Already have an account? Login here.</a>
+  </div>
+</form>
+</body>
+</html>

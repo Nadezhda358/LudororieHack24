@@ -96,11 +96,17 @@ public class EventService {
         }
     }
 
-    public EventDTO getEventDTOForView(Long eventId) {
+    public EventDTO getEventDTOById(Long eventId) {
         Optional<Event> optionalEvent = eventRepository.findById(eventId);
         if (optionalEvent.isPresent()) {
             return modelMapper.map(optionalEvent.get(), EventDTO.class);
         }
         return null;
+    }
+
+    public boolean canUserUpdateEvent(EventDTO eventDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.getUserByUsername(authentication.getName());
+        return eventDTO.getUser().getId() == user.getId();
     }
 }
