@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventDTO {
+    private Long id;
     @NotEmpty(message = "Field must not be empty!")
     @Size(min=3, message = "Size must be at least 3 characters!")
     private String name;

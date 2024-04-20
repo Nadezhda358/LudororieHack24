@@ -20,5 +20,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
             "ORDER BY COUNT(a) DESC")
     List<User> findUsersWithMatchingAbilities(@Param("neededAbilities") List<Ability> neededAbilities,
                                               @Param("userId") Long userId);
+
+    @Query("SELECT e.id FROM User u JOIN u.events e WHERE u.id = :userId")
+    List<Long> findEventIdsByUserId(Long userId);
 }
 
