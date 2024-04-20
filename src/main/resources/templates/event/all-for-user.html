@@ -32,8 +32,10 @@
       <tbody>
       <tr th:each="event : ${eventsForUser}">
         <td th:text="${event.name} ?: 'N/A'"></td>
-        <td th:text="${event.startDate} ?: 'N/A'"></td>
-        <td th:text="${event.endDate} ?: 'N/A'"></td>
+<!--        <td th:text="${event.startDate} ?: 'N/A'"></td>-->
+<!--        <td th:text="${event.endDate} ?: 'N/A'"></td>-->
+        <td th:text="${#temporals.format(event.startDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></td>
+        <td th:text="${#temporals.format(event.endDate, 'yyyy-MM-dd HH:mm')} ?: 'N/A'"></td>
         <td th:text="${event.location} ?: 'N/A'"></td>
         <td th:text="${event.description} ?: 'N/A'"></td>
         <td th:text="${event.user != null ? event.user.username : 'N/A'}"></td>
