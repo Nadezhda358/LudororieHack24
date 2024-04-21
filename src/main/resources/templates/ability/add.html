@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Add ability</title>
+    <title>Добави умение</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Custom styles */
@@ -16,24 +16,29 @@
             font-weight: bold;
         }
     </style>
+    <link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
+<div th:replace="fragments :: nav"></div>
 <div class="container">
-    <h2 class="my-4">Add new ability:</h2>
+    <h2 class="my-4">Добави ново умение:</h2>
     <form action="#" th:action="@{/abilities/submit-ability}" th:object="${abilityDTO}" method="post">
         <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label form-label">Name:</label>
+            <label for="name" class="col-sm-2 col-form-label form-label">Име:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="name" th:field="*{name}"/>
                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <div class="col-sm-10 offset-sm-2">
-                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                    <button type="submit" class="btn btn-primary">Добави</button>
                 </div>
             </div>
         </div>
         </form>
+</div>
+<div class="form-group text-center">
+<a th:href="@{/abilities/get-abilities}">Всички умения</a>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

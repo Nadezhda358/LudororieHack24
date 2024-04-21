@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'DM: ' + ${chatDTO.user1.username} + ' AND ' + ${chatDTO.user2.username}"></title>
+    <title th:text="'ЛС: ' + ${chatDTO.user1.username} + ' И ' + ${chatDTO.user2.username}"></title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -88,11 +88,13 @@
             cursor: pointer;
         }
     </style>
+    <link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
+<div th:replace="fragments :: nav"></div>
 <div class="container">
     <div class="header">
-        <h1 th:text="'DM: ' + ${chatDTO.user1.username} + ' AND ' + ${chatDTO.user2.username}"></h1>
+        <h1 th:text="'ЛС: ' + ${chatDTO.user1.username} + ' И ' + ${chatDTO.user2.username}"></h1>
     </div>
     <div class="conversation">
         <div th:each="message : ${chatDTO.messages}" th:class="${message.senderUser.username == chatDTO.user1.username} ? 'message sent' : 'message received'">

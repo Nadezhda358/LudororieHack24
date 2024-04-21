@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Get abilities</title>
+    <title>Всички умения</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Custom styles */
@@ -11,15 +11,17 @@
             vertical-align: middle;
         }
     </style>
+    <link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
+<div th:replace="fragments :: nav"></div>
 <div class="container">
-    <h2 class="my-4">All abilities:</h2>
+    <h2 class="my-4">Всички умения:</h2>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
             <tr>
-                <th>Name</th>
+                <th>Име</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +31,9 @@
             </tbody>
         </table>
     </div>
+</div>
+<div class="form-group text-center">
+<a th:href="@{/abilities/add-ability}">Добави умение</a>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
 </head>
@@ -10,6 +10,9 @@
         <li><a class="active" href="/users/home-page">Начало</a></li>
         <li><a href="/users/all">Потребители</a></li>
         <li><a href="/event/all">Събития</a></li>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <li><a th:href="@{/abilities/get-abilities}">Умения</a></li>
+        </div>
         <li class="right"><a href="/users/about">За Вас</a></li>
     </ul>
 </div>
