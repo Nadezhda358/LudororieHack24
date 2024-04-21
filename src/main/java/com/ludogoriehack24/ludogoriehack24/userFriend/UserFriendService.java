@@ -1,5 +1,6 @@
 package com.ludogoriehack24.ludogoriehack24.userFriend;
 
+import com.ludogoriehack24.ludogoriehack24.exceptions.ApiRequestException;
 import com.ludogoriehack24.ludogoriehack24.user.User;
 import com.ludogoriehack24.ludogoriehack24.user.UserService;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class UserFriendService {
     public UserFriend userFriendDTOToUserFriend(UserFriendDTO userFriendDTO) {
         return modelMapper.map(userFriendDTO, UserFriend.class);
     }
-    public UserFriendDTO sendFriendRequest(Long friendId) throws Exception {
+    public UserFriendDTO sendFriendRequest(Long friendId){
         User friend = userService.userDTOToUser(userService.getUserById(friendId));
         User user = userService.getLoggedUser();
         List<UserFriend> userFriendsFound = userFriendRepository.findByUserIdAndFriendId(user.getId(), friendId);
@@ -61,8 +62,8 @@ public class UserFriendService {
             userFriendRepository.deleteAll(userFriendsFound);
         });
     }
-    public UserFriendDTO getUserFriendById(Long id) throws Exception {
+    public UserFriendDTO getUserFriendById(Long id) {
         Optional<UserFriend> userFriend = userFriendRepository.findById(id);
-        return userFriend.map(this::userFriendToUserFriendDTO).orElseThrow(() -> new Exception("UserFriend not Found"));
+        return userFriend.map(this::userFriendToUserFriendDTO).orElseThrow(() -> new ApiRequestException("UserFriend not Found"));
     }
 }

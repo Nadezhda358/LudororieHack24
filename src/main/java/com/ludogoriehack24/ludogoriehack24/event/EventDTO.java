@@ -25,15 +25,12 @@ public class EventDTO {
 
     @NotNull(message = "Field must not be empty!")
     private LocalDateTime startDate;
-
-    // след дата на начало
     @NotNull(message = "Field must not be empty!")
     private LocalDateTime endDate;
 
     @Size(min = 4, max = 250, message = "Size must be between 4 and 250 characters!")
     private String location;
 
-    // повече от 255 символа
     @Column(columnDefinition = "TEXT")
     @Size(min = 10, message = "Size must be at least 10 characters!")
     private String description;

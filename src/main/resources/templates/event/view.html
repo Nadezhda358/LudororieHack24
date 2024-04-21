@@ -1,70 +1,8 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title th:text="${eventDTO.name}"></title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<p th:text="'Име:' + ${eventDTO.name}"></p>-->
-<!--<p th:text="'Описание: ' + ${eventDTO.description}"></p>-->
-<!--<p th:text="'Начало: ' + ${#temporals.format(eventDTO.startDate, 'yyyy-MM-dd HH:mm')}"></p>-->
-<!--<p th:text="'Край: ' + ${#temporals.format(eventDTO.endDate, 'yyyy-MM-dd HH:mm')}"></p>-->
-<!--<p th:text="'Място: ' + ${eventDTO.location}"></p>-->
-<!--<p th:text="'Организатор: ' + ${eventDTO.user.fullName}"></p>-->
-<!--<p>Заявили участие:</p>-->
-<!--<table>-->
-<!--    <thead>-->
-<!--        <tr>-->
-<!--            <th>Потребителско име</th>-->
-<!--        </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--        <tr th:each="user : ${eventDTO.users}">-->
-<!--            <th th:text="${user.username}"></th>-->
-<!--        </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-<!--</body>-->
-<!--</html>-->
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title th:text="${eventDTO.name}"></title>-->
-<!--    &lt;!&ndash; Add Bootstrap CSS &ndash;&gt;-->
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--<p th:text="'Име:' + ${eventDTO.name}"></p>-->
-<!--<p th:text="'Описание: ' + ${eventDTO.description}"></p>-->
-<!--<p th:text="'Начало: ' + ${#temporals.format(eventDTO.startDate, 'yyyy-MM-dd HH:mm')}"></p>-->
-<!--<p th:text="'Край: ' + ${#temporals.format(eventDTO.endDate, 'yyyy-MM-dd HH:mm')}"></p>-->
-<!--<p th:text="'Място: ' + ${eventDTO.location}"></p>-->
-<!--<p th:text="'Организатор: ' + ${eventDTO.user.fullName}"></p>-->
-<!--<p>Заявили участие:</p>-->
-<!--<table class="table"> &lt;!&ndash; Added 'table' class for Bootstrap table styling &ndash;&gt;-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>Потребителско име</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr th:each="user : ${eventDTO.users}">-->
-<!--        <th th:text="${user.username}"></th>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-
-<!--&lt;!&ndash; Add Bootstrap JavaScript (optional, for certain components) &ndash;&gt;-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:text="${eventDTO.name}"></title>
-    <!-- Add Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -75,7 +13,7 @@
 <p th:text="'Място: ' + ${eventDTO.location}"></p>
 <p th:text="'Организатор: ' + ${eventDTO.user.fullName}"></p>
 <p>Заявили участие:</p>
-<table class="table"> <!-- Added 'table' class for Bootstrap table styling -->
+<table class="table">
     <thead>
     <tr>
         <th>Потребителско име</th>
@@ -88,7 +26,6 @@
     </tbody>
 </table>
 
-<!-- Add Bootstrap JavaScript (optional, for certain components) -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

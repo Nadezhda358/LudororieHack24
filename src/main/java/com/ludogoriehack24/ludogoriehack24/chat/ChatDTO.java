@@ -1,8 +1,7 @@
-package com.ludogoriehack24.ludogoriehack24.Chat;
+package com.ludogoriehack24.ludogoriehack24.chat;
 
-import com.ludogoriehack24.ludogoriehack24.Message.Message;
+import com.ludogoriehack24.ludogoriehack24.message.Message;
 import com.ludogoriehack24.ludogoriehack24.user.User;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

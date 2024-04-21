@@ -1,4 +1,4 @@
-package com.ludogoriehack24.ludogoriehack24.Exceptions;
+package com.ludogoriehack24.ludogoriehack24.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

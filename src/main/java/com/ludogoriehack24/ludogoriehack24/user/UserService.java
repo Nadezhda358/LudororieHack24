@@ -1,5 +1,6 @@
 package com.ludogoriehack24.ludogoriehack24.user;
 
+import com.ludogoriehack24.ludogoriehack24.exceptions.ApiRequestException;
 import com.ludogoriehack24.ludogoriehack24.abilities.Ability;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityDTO;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityRepository;
@@ -24,7 +25,6 @@ import java.util.*;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -102,7 +102,7 @@ public class UserService {
                 String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 fileName += fileExtension;
                 Path uploadDir = Paths.get("src/main/resources/static/img");
-                Files.createDirectories(uploadDir); // Create directories if they don't exist
+                Files.createDirectories(uploadDir);
                 try (InputStream inputStream = profilePicture.getInputStream()) {
                     Files.copy(inputStream, uploadDir.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
                 }
@@ -144,11 +144,11 @@ public class UserService {
                 .map(this::userToUserDTO)
                 .toList();
     }
-    public UserDTO getUserById(Long id) throws Exception {
+    public UserDTO getUserById(Long id){
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()){
             return userToUserDTO(user.get());
         }
-        throw new Exception();
+        throw new ApiRequestException("User not found");
     }
 }

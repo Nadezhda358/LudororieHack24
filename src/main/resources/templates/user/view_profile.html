@@ -10,12 +10,16 @@
 <body>
 <div th:replace="fragments :: nav"></div>
 <div class="container">
-
     <section>
-        <form th:if="${currentUser.id != userId}" method="post" th:action="@{/user-friends/friend-request/{friendId}(friendId=${user.id})}" style="padding-bottom: 20px;">
-            <input type="hidden" name="friendId" th:value="${user.id}" />
-            <button type="submit" class="btn btn-primary">Добави приятел</button>
-        </form>
+        <div class="row">
+            <form th:if="${currentUser.id != userId}" method="post" th:action="@{/user-friends/friend-request/{friendId}(friendId=${user.id})}" style="padding-bottom: 20px;">
+                <input type="hidden" name="friendId" th:value="${user.id}" />
+                <button type="submit" class="btn btn-success">Добави приятел</button>
+            </form>
+            <form th:if="${currentUser.id != userId}" method="get" th:action="@{/chat/{friendId}(friendId=${user.id})}" style="padding-bottom: 20px; margin-left: 10px;">
+                <button type="submit" class="btn btn-primary">Изпрати съобщение</button>
+            </form>
+        </div>
         <div class="row">
         <div class="col-lg-6">
             <img th:src="${user.profileImageName != null ? '/img/' + user.profileImageName : '/img/default.png'}"
