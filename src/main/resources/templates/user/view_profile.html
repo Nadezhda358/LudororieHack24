@@ -146,6 +146,38 @@
             </table>
         </div>
     </section>
+    <section th:if="${currentUser.id != userId}">
+        <h3>Приятели:</h3>
+        <div>
+            <table class="table table-hover col-lg-9 col-md-12 col-sm-12">
+                <tbody>
+                <tr th:each="userFriend : ${userFriends}">
+                    <td>
+                        <img th:src="${userFriend.user.profileImageName != null ? '/img/' + userFriend.user.profileImageName : '/img/default.png'}"
+                             onerror="this.onerror=null; this.src='/img/no_img.png';"
+                             class="img"
+                             alt="User Image" th:if="${userFriend.user.id} != ${user.id}">
+                        <img th:src="${userFriend.friend.profileImageName != null ? '/img/' + userFriend.friend.profileImageName : '/img/default.png'}"
+                             onerror="this.onerror=null; this.src='/img/no_img.png';"
+                             class="img"
+                             alt="User Image" th:if="${userFriend.user.id} == ${user.id}">
+                    </td>
+                    <td>
+                    <td>
+                        <a th:text="${userFriend.user.id != user.id ? userFriend.user.fullName : userFriend.friend.fullName}"
+                           th:href="@{/users/view-profile/{userId}(userId=${userFriend.user.id != user.id ? userFriend.user.id : userFriend.friend.id})}"
+                           class="name-link"></a>
+                    </td>
+                    <td>
+                        <form method="get" th:action="@{/user-friends/delete/{userFriendId}(userFriendId=${userFriend.id})}">
+                            <button type="submit" class="btn btn-danger">Премахни</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 </body>
 </html>
