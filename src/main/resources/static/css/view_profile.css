@@ -1,0 +1,21 @@
+.table .img{
+    width: 200px;
+}
+.name-link{
+    color: black;
+    text-decoration: none;
+}
+.profile-img{
+    max-height: 550px !important;
+    width: 100%;
+    height: auto;
+}
+section{
+    margin-top: 50px;
+}
+h1{
+    text-size: 18px;
+}
+.title{
+    font-weight: bold;
+}

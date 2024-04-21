@@ -10,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +35,7 @@ public class UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
     private AbilityRepository abilityRepository;
+
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -57,13 +60,6 @@ public class UserService {
                 .toList();
     }
 
-    public List<UserDTO> getRecommendedUsers(){
-        User loggedUser = getLoggedUser();
-        List<User> users = userRepository.findUsersWithMatchingAbilities(loggedUser.getNeededAbilities(), loggedUser.getId());
-        return users.stream()
-                .map(this::userToUserDTO)
-                .toList();
-    }
     public String editProfile(Long id, Model model, HttpServletRequest request){
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
@@ -78,6 +74,11 @@ public class UserService {
         String referer = request.getHeader("referer");
         return "redirect:" + referer;
     }
+
+    public boolean comparePasswords(String password, String repeatPassword) {
+        return password.equals(repeatPassword);
+    }
+
     public String addChanges(UserDTO userDTO, BindingResult bindingResult, Model model,@RequestParam(name = "selectedAbilitiesIds", required = false) List<Long> selectedAbilitiesIds,
                              @RequestParam(name = "searchedAbilitiesIds", required = false) List<Long> searchedAbilitiesIds,@RequestParam("profilePicture") MultipartFile profilePicture) {
         List<Ability> abilities = abilityRepository.findAllByIdIn(selectedAbilitiesIds);
@@ -135,7 +136,19 @@ public class UserService {
         }
         return userRepository.getUserByUsername(username);
     }
-    public boolean comparePasswords(String password, String repeatPassword) {
-        return password.equals(repeatPassword);
+
+    public List<UserDTO> getRecommendedUsers(){
+        User loggedUser = getLoggedUser();
+        List<User> users = userRepository.findUsersWithMatchingAbilities(loggedUser.getNeededAbilities(), loggedUser.getId());
+        return users.stream()
+                .map(this::userToUserDTO)
+                .toList();
+    }
+    public UserDTO getUserById(Long id) throws Exception {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            return userToUserDTO(user.get());
+        }
+        throw new Exception();
     }
 }
