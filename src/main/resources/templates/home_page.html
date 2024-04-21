@@ -26,11 +26,8 @@
 <div th:replace="fragments :: nav"></div>
 
 <div class="container">
-    <h3 class="alert alert-success row" th:if="${recommendedUsers != null and not #lists.isEmpty(recommendedUsers)}">
-        <a href="#" class="arrow-link" style="display: inline-block; text-decoration: none; color: black">
-            <span class="col">За Вас:</span>
-            <img src="/img/arrow-right.png" alt="arrow-right" class="arrow-right">
-        </a>
+    <h3 class="alert alert-success row" th:if="${recommendedUsers != null and not #lists.isEmpty(recommendedUsers)}" style="padding-bottom: 10px;">
+        <span class="col">За Вас:</span>
     </h3>
 
     <div id="userCarousel" class="carousel-container" th:if="${recommendedUsers != null and not #lists.isEmpty(recommendedUsers)}">
@@ -95,17 +92,15 @@
     const nextButton = document.getElementById("nextButton");
     const carouselTrack = document.querySelector(".carousel-track");
     const cards = document.querySelectorAll(".card");
-    const itemWidth = cards[0].offsetWidth; // Width of each card
+    const itemWidth = cards[0].offsetWidth;
     let currentIndex = 0;
 
     function updateCarousel(index) {
-        // Prevent sliding too far left or right
         if (index < 0) {
             index = 0;
         } else if (index > cards.length - getVisibleItems()) {
             index = cards.length - getVisibleItems();
         }
-        // Calculate the translation amount
         const translateX = -index * itemWidth + "px";
         carouselTrack.style.transform = `translateX(${translateX})`;
         currentIndex = index;
@@ -122,18 +117,16 @@
     prevButton.addEventListener("click", showPrevCard);
     nextButton.addEventListener("click", showNextCard);
 
-    // Function to get number of visible items based on screen width
     function getVisibleItems() {
         const width = window.innerWidth;
         if (width >= 992) {
-            return 4; // Large screens
+            return 4;
         } else if (width >= 768) {
-            return 3; // Medium screens
+            return 3;
         }
-        return 1; // Small screens
+        return 1;
     }
 
-    // Handle resize to adjust items in view
     window.addEventListener('resize', () => {
         updateCarousel(currentIndex);
     });
