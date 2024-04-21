@@ -12,8 +12,10 @@
             border-radius: 10px; /* Add border radius for rounded corners */
         }
     </style>
+    <link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
+<div th:replace="fragments :: nav"></div>
 <div class="container">
     <p th:text="'Име: ' + ${eventDTO.name}"></p>
     <p th:text="'Описание: ' + ${eventDTO.description}"></p>
