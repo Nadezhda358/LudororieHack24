@@ -10,15 +10,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @AllArgsConstructor
@@ -65,22 +74,43 @@ public class UserService {
         String referer = request.getHeader("referer");
         return "redirect:" + referer;
     }
+
     public boolean comparePasswords(String password, String repeatPassword) {
         return password.equals(repeatPassword);
     }
-    public String addChanges(UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam("selectedAbilitiesIds") List<Long> selectedAbilitiesIds,@RequestParam("searchedAbilitiesIds") List<Long> searchedAbilitiesIds) {
+
+    public String addChanges(UserDTO userDTO, BindingResult bindingResult, Model model,@RequestParam(name = "selectedAbilitiesIds", required = false) List<Long> selectedAbilitiesIds,
+                             @RequestParam(name = "searchedAbilitiesIds", required = false) List<Long> searchedAbilitiesIds,@RequestParam("profilePicture") MultipartFile profilePicture) {
         List<Ability> abilities = abilityRepository.findAllByIdIn(selectedAbilitiesIds);
         List<Ability> searched = abilityRepository.findAllByIdIn(searchedAbilitiesIds);
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDTO", userDTO);
+            model.addAttribute("abilities",abilityRepository.findAll());
             return "/user/edit";
         }
         if (!comparePasswords(userDTO.getPassword(), userDTO.getRepeatPassword())) {
             model.addAttribute("passwordsDoNotMatch", "Passwords do not match!");
+            model.addAttribute("abilities",abilityRepository.findAll());
             return "/user/registration";
         }
         User user = userDTOToUser(userDTO);
         user.setPassword(passwordEncoder().encode(user.getPassword()));
+        if (!profilePicture.isEmpty()) {
+            try {
+                String fileName = UUID.randomUUID().toString();
+                String originalFileName = profilePicture.getOriginalFilename();
+                String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                fileName += fileExtension;
+                Path uploadDir = Paths.get("src/main/resources/static/img");
+                Files.createDirectories(uploadDir); // Create directories if they don't exist
+                try (InputStream inputStream = profilePicture.getInputStream()) {
+                    Files.copy(inputStream, uploadDir.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                }
+                user.setProfileImageName(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         List<Ability> abilityList = new ArrayList<>();
         for (int i = 0; i < abilities.size(); i++) {
             abilityList.add(modelMapper.map(abilities.get(i),Ability.class));
@@ -94,7 +124,7 @@ public class UserService {
         user.setEnabled(true);
         user.setRole(Role.ROLE_USER);
         userRepository.save(user);
-        return "redirect:/users/login";
+        return "redirect:/users/home-page";
     }
     public User getLoggedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

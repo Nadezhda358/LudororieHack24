@@ -69,6 +69,7 @@
 //}
 package com.ludogoriehack24.ludogoriehack24.user;
 
+import com.ludogoriehack24.ludogoriehack24.Message.Message;
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
 import com.ludogoriehack24.ludogoriehack24.abilities.Ability;
 import com.ludogoriehack24.ludogoriehack24.event.Event;
@@ -133,8 +134,13 @@ public class User {
     @Column(columnDefinition = "boolean DEFAULT '1'")
     private boolean enabled;
 
-
     @OneToMany(mappedBy = "user")
     private List<Event> organisedEvents;
+
+    @OneToMany(mappedBy = "receiverUser")
+    private List<Message> receivedMessages;
+
+    @OneToMany(mappedBy = "senderUser")
+    private List<Message> sentMessages;
     //role
 }
