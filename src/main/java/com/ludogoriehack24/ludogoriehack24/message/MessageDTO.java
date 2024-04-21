@@ -1,11 +1,8 @@
-package com.ludogoriehack24.ludogoriehack24.Message;
+package com.ludogoriehack24.ludogoriehack24.message;
 
-import com.ludogoriehack24.ludogoriehack24.Chat.Chat;
+import com.ludogoriehack24.ludogoriehack24.chat.Chat;
 import com.ludogoriehack24.ludogoriehack24.user.User;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

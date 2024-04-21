@@ -5,7 +5,6 @@ import com.ludogoriehack24.ludogoriehack24.abilities.AbilityDTO;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityRepository;
 import com.ludogoriehack24.ludogoriehack24.abilities.AbilityService;
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
-import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriend;
 import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriendDTO;
 import com.ludogoriehack24.ludogoriehack24.userFriend.UserFriendService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -89,6 +87,11 @@ public class UserController {
         model.addAttribute("selectedAbilities2",new ArrayList<AbilityDTO>());
         return "/user/registration";
     }
+    @GetMapping("/about")
+    public String showAbout(Model model) {
+        return "redirect:/users/view-profile/" + userService.getLoggedUser().getId();
+    }
+
     @PostMapping("submit-registration")
     public String saveUser(@Valid UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam(name = "selectedAbilitiesIds", required = false) List<Long> selectedAbilitiesIds,
                            @RequestParam(name = "searchedAbilitiesIds", required = false) List<Long> searchedAbilitiesIds,@RequestParam("profilePicture") MultipartFile profilePicture) {

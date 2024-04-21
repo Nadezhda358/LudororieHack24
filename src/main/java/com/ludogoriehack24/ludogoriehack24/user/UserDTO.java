@@ -1,7 +1,7 @@
 
 package com.ludogoriehack24.ludogoriehack24.user;
 
-import com.ludogoriehack24.ludogoriehack24.Message.Message;
+import com.ludogoriehack24.ludogoriehack24.message.Message;
 import com.ludogoriehack24.ludogoriehack24.abilities.Ability;
 import com.ludogoriehack24.ludogoriehack24.constants.Role;
 import com.ludogoriehack24.ludogoriehack24.event.Event;

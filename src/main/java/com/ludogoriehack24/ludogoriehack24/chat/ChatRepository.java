@@ -1,4 +1,4 @@
-package com.ludogoriehack24.ludogoriehack24.Chat;
+package com.ludogoriehack24.ludogoriehack24.chat;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

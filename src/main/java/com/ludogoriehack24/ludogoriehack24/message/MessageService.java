@@ -1,6 +1,6 @@
-package com.ludogoriehack24.ludogoriehack24.Message;
+package com.ludogoriehack24.ludogoriehack24.message;
 
-import com.ludogoriehack24.ludogoriehack24.Exceptions.ApiRequestException;
+import com.ludogoriehack24.ludogoriehack24.exceptions.ApiRequestException;
 import com.ludogoriehack24.ludogoriehack24.user.User;
 import com.ludogoriehack24.ludogoriehack24.user.UserRepository;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package com.ludogoriehack24.ludogoriehack24.Message;
+package com.ludogoriehack24.ludogoriehack24.message;
 
-import com.ludogoriehack24.ludogoriehack24.Chat.ChatService;
+import com.ludogoriehack24.ludogoriehack24.chat.ChatService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

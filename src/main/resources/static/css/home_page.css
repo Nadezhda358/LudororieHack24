@@ -49,3 +49,34 @@
 #userCarousel .card-container {
     margin-bottom: 10px;
 }
+
+#prevButton,
+#nextButton {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 16px;
+  margin-top: -50px;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+  border: 1px solid black;
+  z-index: 2;
+}
+
+#nextButton {
+  right: 50px;
+  border-radius: 3px 0 0 3px;
+}
+#prevButton {
+  left: 50px;
+}
+
+#prevButton:hover,
+#nextButton:hover {
+  background-color: rgba(255, 255, 255, 1);
+}

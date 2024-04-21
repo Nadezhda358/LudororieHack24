@@ -1,13 +1,11 @@
-package com.ludogoriehack24.ludogoriehack24.Chat;
+package com.ludogoriehack24.ludogoriehack24.chat;
 
-import com.ludogoriehack24.ludogoriehack24.Message.MessageDTO;
+import com.ludogoriehack24.ludogoriehack24.message.MessageDTO;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,7 +16,6 @@ public class ChatController {
     @GetMapping("/{userReceiverId}")
     public String startChat(@PathVariable("userReceiverId") Long userReceiverId, Model model) {
         ChatDTO chatDTO = chatService.startChat(userReceiverId);
-//        if (chatDTO == null) return "/";
         model.addAttribute("chatDTO", chatDTO);
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setChat(chatService.chatDTOToChat(chatDTO));

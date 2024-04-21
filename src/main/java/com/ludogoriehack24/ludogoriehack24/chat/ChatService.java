@@ -1,9 +1,8 @@
-package com.ludogoriehack24.ludogoriehack24.Chat;
+package com.ludogoriehack24.ludogoriehack24.chat;
 
-import com.ludogoriehack24.ludogoriehack24.Exceptions.ApiRequestException;
+import com.ludogoriehack24.ludogoriehack24.exceptions.ApiRequestException;
 import com.ludogoriehack24.ludogoriehack24.user.User;
 import com.ludogoriehack24.ludogoriehack24.user.UserRepository;
-import com.ludogoriehack24.ludogoriehack24.user.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
@@ -47,7 +46,6 @@ public class ChatService {
     public boolean checkIfChatCanBeStarted(User user2) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.getUserByUsername(authentication.getName());
-//        if (user.getId() == user2.getId()) return false;
         Chat optionalChat = chatRepository.findChatByUserIds(user.getId(), user2.getId());
         if (optionalChat != null) return false;
         return true;
