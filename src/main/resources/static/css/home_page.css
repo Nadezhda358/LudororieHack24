@@ -80,3 +80,15 @@
 #nextButton:hover {
   background-color: rgba(255, 255, 255, 1);
 }
+@media screen and (max-width: 600px) {
+  #prevButton,
+  #nextButton {
+    top: 65%;
+  }
+  #nextButton {
+    right: 0;
+  }
+  #prevButton {
+    left: 0;
+  }
+}
