@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-
-<div th:fragment="nav" class="menu-container">
-    <ul class="topnav">
-        <li><a class="active" href="/users/home-page">Начало</a></li>
-        <li><a href="/users/all">Потребители</a></li>
-        <li><a href="/event/all">Събития</a></li>
-        <li class="right"><a href="/users/about">За Вас</a></li>
-    </ul>
-</div>
+<!--<footer th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--    <div>-->
+<!--        <a th:href="@{/event/all}">Всички събития</a>-->
+<!--        <a th:href="@{/event/add}">Добави събитие</a>-->
+<!--        <a th:href="@{/event/created-by-user}">Създадени от Вас</a>-->
+<!--        <a th:href="@{/event/participation-for-user}">Къде участвате</a>-->
+<!--    </div>-->
+<!--</footer>-->
 <footer th:fragment="event-footer" xmlns:th="http://www.w3.org/1999/xhtml" style="text-align: center; background-color: #f2f2f2; padding: 20px;">
     <div style="display: inline-block;">
+        <a th:href=@{/users/home-page}>Начало</a>
         <a th:href="@{/event/all}" style="text-decoration: none; color: #333; margin: 0 10px;">Всички събития</a>
         <a th:href="@{/event/add}" style="text-decoration: none; color: #333; margin: 0 10px;">Добави събитие</a>
         <a th:href="@{/event/created-by-user}" style="text-decoration: none; color: #333; margin: 0 10px;">Създадени от Вас</a>
         <a th:href="@{/event/participation-for-user}" style="text-decoration: none; color: #333; margin: 0 10px;">Къде участвате</a>
     </div>
 </footer>
-</body>
-</html>

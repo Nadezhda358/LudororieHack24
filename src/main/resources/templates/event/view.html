@@ -4,28 +4,33 @@
     <meta charset="UTF-8">
     <title th:text="${eventDTO.name}"></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 20px; /* Add margin to the top */
+            border: 2px solid #f2f2f2; /* Add border */
+            padding: 20px; /* Add padding */
+            border-radius: 10px; /* Add border radius for rounded corners */
+        }
+    </style>
+    <link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
-<p th:text="'Име:' + ${eventDTO.name}"></p>
-<p th:text="'Описание: ' + ${eventDTO.description}"></p>
-<p th:text="'Начало: ' + ${#temporals.format(eventDTO.startDate, 'yyyy-MM-dd HH:mm')}"></p>
-<p th:text="'Край: ' + ${#temporals.format(eventDTO.endDate, 'yyyy-MM-dd HH:mm')}"></p>
-<p th:text="'Място: ' + ${eventDTO.location}"></p>
-<p th:text="'Организатор: ' + ${eventDTO.user.fullName}"></p>
-<p>Заявили участие:</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Потребителско име</th>
-    </tr>
-    </thead>
-    <tbody>
+<div th:replace="fragments :: nav"></div>
+<div class="container">
+    <p th:text="'Име: ' + ${eventDTO.name}"></p>
+    <p th:text="'Описание: ' + ${eventDTO.description}"></p>
+    <p th:text="'Начало: ' + ${#temporals.format(eventDTO.startDate, 'yyyy-MM-dd HH:mm')}"></p>
+    <p th:text="'Край: ' + ${#temporals.format(eventDTO.endDate, 'yyyy-MM-dd HH:mm')}"></p>
+    <p th:text="'Място: ' + ${eventDTO.location}"></p>
+    <p th:text="'Организатор: ' + ${eventDTO.user.fullName}"></p>
+    <p>Заявили участие:</p>
     <tr th:each="user : ${eventDTO.users}">
-        <th th:text="${user.username}"></th>
+        <p>
+        <td th:text="${user.username}"></td>
+        </p>
     </tr>
-    </tbody>
-</table>
-
+</div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<footer th:insert="/fragments.html ::event-footer"></footer>
 </html>

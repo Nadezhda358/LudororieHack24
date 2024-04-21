@@ -30,8 +30,10 @@
             margin-left: 10px;
         }
     </style>
+  <link rel="stylesheet" href="/css/nav.css">
 </head>
 <body>
+<div th:replace="fragments :: nav"></div>
 <div class="container">
   <h2 class="my-4">Заявили сте участие в:</h2>
   <div class="row">
@@ -56,4 +58,5 @@
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<footer th:insert="/fragments.html ::event-footer"></footer>
 </html>
